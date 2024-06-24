@@ -1,0 +1,60 @@
+
+
+    <ion-tabs >
+       <ion-tab-bar slot="top">
+        <div class="contenedor_img_toolbar">
+          <img class="fondo_logo" [src]="mobile?'assets/img/icono_lab.png':'assets/img/logo.png'" alt="logo" height="50">
+        </div>
+        <div class="tabs-buttons">
+      
+        <ion-tab-button tab="lista-ordenes">
+          <ion-icon name="newspaper-outline"></ion-icon>
+          <ion-label *ngIf="!mobile">Resultados</ion-label>
+        </ion-tab-button>
+
+        <!-- <ion-tab-button *ngIf="ingreso_orden_c" tab="ingreso-orden-completa"> -->
+      <ion-tab-button *ngIf="ingreso_orden_c" tab="ingreso-orden-completa">
+         <ion-icon name="document-text-outline"></ion-icon>
+          <ion-label *ngIf="!mobile">Nueva Orden</ion-label>
+        </ion-tab-button>
+        <ion-tab-button *ngIf="descarga_facturas" tab="descarga-facturas">
+          <ion-icon name="code-download-outline"></ion-icon>
+         <ion-label  *ngIf="!mobile">Descarga Facturas</ion-label> </ion-tab-button>
+
+        <ion-tab-button *ngIf="enable_envio_iess || enable_envio_issfa" tab="envio-iess">
+          <img src="assets/icon/iess_logo.png" alt="logo" height="35">
+          <ion-label *ngIf="!mobile">Iess/Issfa</ion-label>
+        </ion-tab-button>
+
+      <ion-tab-button tab="envio-bloque" *ngIf="envio_bloque" >
+        <ion-icon name="layers-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Envio en bloque</ion-label> </ion-tab-button>
+
+        <!--
+       <ion-tab-button tab="responsive-listado-ingreso-de-usuarios">
+       <ion-icon name="person-add-outline"></ion-icon>
+       <ion-label  *ngIf="!mobile">Paciente</ion-label> </ion-tab-button>
+      -->
+
+       <ion-tab-button (click)="openModalEntrega()" *ngIf="enable_entrega_orden" >
+        <ion-icon name="checkbox-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Entrega</ion-label> </ion-tab-button>
+       <ion-tab-button (click)="returnPDF()">
+        <ion-icon name="clipboard-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Impresión</ion-label> </ion-tab-button>
+       <ion-tab-button *ngIf="presupuesto" (click)="openCalcPresupuesto()">
+        <ion-icon name="cash-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Presupuesto</ion-label> </ion-tab-button>
+       <ion-tab-button *ngIf="configuracion" (click)="openConfiguration()">
+        <ion-icon name="settings-outline"></ion-icon>
+       <ion-label  *ngIf="!mobile">configuración</ion-label> </ion-tab-button>
+       
+       
+
+       <ion-tab-button class="btn-user" (click)="cerrarSesion()"  color="danger">
+        <ion-icon name="exit-outline"  color="danger"></ion-icon>
+       <ion-label   color="danger" *ngIf="!mobile">{{ 'complex.lista_cerrar_sesion' | translate }}</ion-label> </ion-tab-button>
+      </div>
+    
+      </ion-tab-bar>
+    </ion-tabs>

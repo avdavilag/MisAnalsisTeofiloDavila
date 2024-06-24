@@ -1,0 +1,45 @@
+.card_custom{
+    width: 250px;
+  //  margin: auto;
+    background: #edeff6;
+}
+
+.card_custom_detalle{
+ion-item{
+    --background: transparent;
+}
+}
+
+.header_tbl{
+    background: #35d2d0;
+    color: white;
+    font-weight: 500;
+  }
+  ///////////////
+  ion-col {
+  background-color: #edeff6;
+  border: solid 1px #fff;
+  color: #fff;
+  text-align: center;
+}
+/////////////////////////////////////////////////
+.label-styling {
+  color: black;
+  text-align: left !important;  // Utilizamos !important para asegurarnos de que este estilo se aplique
+}
+
+ion-item-divider {
+  --background: #edeff6;
+  --color: #808080;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: auto; /* Esto coloca el espacio disponible en la parte izquierda */
+  --padding-end: 10px; /* Ajusta el espacio en la parte derecha según tus necesidades */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.mensaje-cambio {
+  font-size: 11px;
+  color: green;
+}

@@ -1,0 +1,485 @@
+.nombre_usuario {
+    color: gray;
+  }
+  ion-list {
+    padding: 0px 100px 30px 30px;
+    ion-item {
+      padding: 2px 3px;;
+    }
+    ion-text {
+      width: 100%;
+      .val_orden {
+        opacity: 0.2;
+        font-size: small;
+        ion-icon {
+          opacity: 1;
+          color: rgb(189, 173, 0);
+          padding-right: 10px;
+        }
+      }
+      .orden_values {
+        max-width: 600px;
+        white-space: break-spaces;
+        color: rgb(255, 94, 0);
+        .val_fecha {
+          ion-icon {
+            color: rgb(255, 94, 0);
+            padding-right: 10px;
+          }
+        }
+  
+        .val_ced {
+          ion-icon {
+            color: rgb(0, 164, 219);
+            padding-right: 10px;
+          }
+          .val_ced_dis {
+            display: contents;
+          }
+        }
+  
+        ion-col {
+          display: flex;
+          align-items: center;
+          color: rgb(121, 121, 121);
+          //  color: rgb(255, 122, 122);
+        }
+      }
+    }
+  }
+  .val_doc {
+    ion-icon {
+      padding-right: 10px;
+    }
+    color: #004d81;
+    //font-size: medium;
+    //padding: 5px;
+  }
+  .disable_val {
+    //    color:#1a5369;
+    opacity: 0.3;
+  }
+  
+
+  .val_cedula {
+    ion-icon {
+      color:#9ce0ff;
+      padding-right: 10px;
+    }
+  }
+  
+  ion-toolbar {
+    ion-searchbar {
+      width: 35%;
+      min-width: 180px;
+      margin-right: 2%;
+    }
+    ion-buttons {
+      padding-left: 1vw;
+      ion-button {
+        margin-right: 10px;
+        ion-icon {
+          font-size: xx-large;
+        }
+      }
+    }
+  }
+  
+  .id_orden {
+    color: #686868;
+  }
+  .nombres_orden {
+    padding-left: 0px;
+    font-size: medium;
+    font-weight: 600;
+  }
+  .btn_listas {
+    // padding-right: 100px;
+    color: #686868;
+    .btn_orden {
+      margin: 0;
+      font-size: small;
+      text-transform: none;
+      color: #686868;
+    }
+    .btn_filtro {
+      margin: 0;
+      font-size: small;
+      text-transform: none;
+      color: #686868;
+    }
+  }
+  
+  ion-card {
+    //width: 95%;
+    margin: 2%;
+    margin-top: 20px;
+    max-width: 1080px;
+    ion-card-title {
+      font-weight: bold;
+    }
+    ion-card-content {
+      padding-left: 0px;
+    }
+  }
+  ion-content {
+    align-items: center;
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    --background: #fdfdfd;
+  }
+  
+  .no_results {
+    opacity: 0.3;
+    // background-color: rgb(54, 54, 54);
+    // --background: rgb(22, 22, 22);
+    text-align: center;
+    font-weight: bold;
+    font-size: xx-large;
+    div {
+      width: 100%;
+    }
+  }
+  
+  .indice {
+    // font-stretch: condensed;
+    font-size: x-large;
+    opacity: 0.3;
+    // color: #0089ff;
+  }
+  
+  ion-icon {
+    //DESABILITA LA INSCRIPCION DEL HOVER
+    pointer-events: none;
+  }
+  ion-toolbar {
+    contain: initial !important;
+    overflow: initial !important;
+    img {
+      max-height: 90px;
+    }
+    ion-button {
+      --overflow: initial;
+    }
+  }
+  
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    // border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: auto;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 9999 !important;
+    top: 140%;
+    // left: 10%;
+    margin-left: -15px;
+    white-space: break-spaces;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .search-input {
+    text-align: -webkit-right;
+    ion-searchbar {
+      width: 35%;
+      min-width: 180px;
+      margin-right: 2%;
+    }
+  }
+
+  /////Formulario Paciente Ingreso
+  .ingreso-input {
+    text-align: -webkit-right;
+  }
+
+  
+
+
+
+
+
+
+
+
+  //CSS PARA MOVILES
+  @media only screen and (max-width: 600px) {
+    .btn_listas {
+      padding-right: 0;
+      margin-left: 0;
+    }
+    ion-card-header {
+      margin-left: 0;
+      padding-left: 0;
+    }
+  
+    ion-list {
+      padding: 0;
+      ion-buttons {
+        flex-flow: column;
+        height: 100%;
+        justify-content: center;
+        margin-left: 0;
+        ion-button {
+          margin-bottom: 10px;
+          margin-top: 30%;
+        }
+      }
+    }
+  
+    ion-toolbar {
+      img {
+        width: 60%;
+      }
+      ion-searchbar {
+        width: 100%;
+        position: absolute;
+        z-index: 99999;
+        // display: none;
+      }
+      .nombre_usuario {
+        display: none;
+      }
+      ion-buttons {
+        padding: 0;
+      }
+    }
+    .indice {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: medium;
+    }
+    .val_orden {
+      opacity: 1 !important;
+      color: #686868 !important;
+      font-size: inherit !important;
+    }
+  
+    .no_results {
+      font-size: large;
+    }
+    .franja_usr {
+      right: 0;
+    }
+    .fechas {
+      margin-top: 10px;
+    }
+  } //FIN MOVILES
+  
+  .franja_usr {
+    width: fit-content;
+    position: fixed;
+    z-index: 9999;
+    background: #ebebeb;
+    padding: 10px;
+    border-bottom-right-radius: 10px;
+    color: #414141;
+    box-shadow: 3px 2px 2px #d9d9d9;
+    margin:4px 7px 10px;
+  }
+
+
+  .franja_primer_conteiner {
+    width: fit-content;
+    position: fixed;
+    z-index: 9999;
+   background: #ebebeb;
+    // padding: 6px;
+    // border-bottom-right-radius: 10px;
+    // color: #414141;
+    // box-shadow: 3px 2px 2px #d9d9d9;
+    margin: -12px 7px 10px;
+  }
+
+
+  .fechas {
+    width: fit-content;
+    padding: 0;
+    width: 100%;
+  }
+  .fechas_mob {
+    text-align: center;
+    color: dodgerblue;
+    width: 100%;
+    background: #fff5f5;
+    //font-weight: bold;
+    small {
+      font-weight: bold;
+    }
+  }
+  
+  .search-input {
+    ion-searchbar {
+      width: 100%;
+    }
+  }
+  
+  .saldo_pen {
+    background: #fc65ff;
+  }
+  
+  .info-search {
+    float: right;
+    padding-right: 17px;
+    color: #ff8b7f;
+  }
+  .info_size {
+    padding-left: 30px;
+    font-size: xx-small;
+    color: #a4a4a4;
+  }
+  .info-text {
+    font-weight: bold;
+    font-size: large;
+  }
+  ///Scroll de paciente en arreglo de paciente linea 164
+  .scroll-container {
+    max-height: 300px;
+    overflow-y: auto; 
+    padding-right: 8%;
+  }
+  ///Se pone scroll estatico en el primer content linea 45
+  .contenido-estatico {
+    --offset-top: 0 !important;
+    --offset-bottom: 0 !important;
+    display: flex;
+    
+  }
+  .fila-seleccionada {
+    background-color: #e0e0e0; /* Cambia esto al estilo que desees para resaltar la fila seleccionada */
+  }
+  .row_datail_result.focused {
+    background: #635887;
+    color: white;
+    cursor: pointer;
+  }
+  .row_datail_result:hover{
+    cursor: pointer;
+    border-bottom: solid 0.2px aliceblue;
+    background: #cef0ff;
+    color: #3880ff;
+    cursor: pointer;
+    --background: aliceblue;
+  }
+  .row_datail_result {
+    //border-bottom: 1px solid #f1ecec;
+  }
+  .row_datail_result.active {
+    background: #635887;
+    color: darkorchid;
+    cursor: pointer;
+    
+  }
+  .row_datail_result item-native{
+    background: green;
+  }
+  .contenedor-flexible {
+    display: flex;
+  }
+
+
+
+  .div_container{
+    height: 78%;
+      overflow: scroll;
+      .col_detail_result{
+        font-size: smaller;
+        font-weight: 600;
+      }
+  }
+  .focused {
+    /* Estilos para el ítem enfocado */
+    background-color: yellow;
+  }
+
+ .clase_ion-card {
+    --background: #ebebeb;
+    --color: #003457;
+    height: 15pc;
+    width: 49pc;
+  }
+  
+  .clase_ion-card-title {
+    --color: rgba(106, 156, 222, 0.5);
+    margin: 13% 3px;
+  }
+  
+  .clase_ion-card-subtitle {
+    --color: #003457;
+  }
+
+  ////
+  .input-con-sombra {
+    min-height: 41px;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 0px 0px 4px 8px;
+    text-transform: uppercase;
+  }
+  .input-con-sombra_select {
+    min-height: 42px;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 0px 0px 4px 8px;
+    text-transform: uppercase;
+  }
+  
+  .inputdate{
+    height: 43px;
+        width: 101.1%;
+        font-size: 14px;
+        font-weight: 900;
+        padding-left: 11px ;
+        border: solid 1.8px #cacaca;
+        border-bottom: solid 2px #929191;
+        border-right: solid 2px #929191;
+        margin: -1px -2px;
+        border-radius: 5px;
+        background: #fbfbfb;
+        color: black;
+  }
+  
+  .inputdate:hover{
+    border-bottom: solid 2px #4268ec;
+  
+      border-right: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+
+  .card_cod_pac {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: -56pc;
+    margin: 2px -1px;
+    padding: 0;
+    height: 29px;
+}

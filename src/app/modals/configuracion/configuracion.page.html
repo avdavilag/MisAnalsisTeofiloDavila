@@ -1,0 +1,118 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+
+<ion-toolbar>
+  <ion-title>Configuración</ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>  
+        <ion-label>Estado Agente cs :</ion-label>
+        <ion-chip *ngIf="status_csagent" (click)="testCsAgent()" color="success">Activo</ion-chip>
+        <ion-chip *ngIf="!status_csagent" (click)="testCsAgent()" color="warning">Desconectado</ion-chip>
+      </ion-col>
+
+    </ion-row>
+    <ion-row>
+      <ion-col><h6>Impresoras</h6></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-start" size="6" sixe-sm="12" sixe-xm="12">
+        <ion-input [disabled]="!status_csagent || true" label="Impresora de Recibos" label-placement="floating" fill="solid" placeholder="Nombre impresora"   [value]="recibos_printer"  [(ngModel)]="recibos_printer" ></ion-input>
+       <!--
+        <ion-select [disabled]="!status_csagent || true" cancelText="Cancelar" okText="Seleccionar"
+          (ionChange)="selectChangePrinter($event,'recibos')" label="Impresora de Recibos" label-placement="floating"
+          fill="outline" placeholder="Seleccionar impresora" [(ngModel)]="recibos_printer" [value]="recibos_printer">
+          <ion-select-option value='no'>Sin seleccionar</ion-select-option>
+          <ion-select-option *ngFor="let item of list_printers"
+            [value]="item.impresora">{{item.impresora}}</ion-select-option>
+        </ion-select>
+        -->
+      </ion-col>
+      <ion-col size="6" sixe-sm="12" sixe-xm="12">
+        <ion-input [disabled]="!status_csagent || true" label="Impresora de Etiquetas" label-placement="floating" fill="solid" placeholder="Nombre impresora"   [value]="etiquetas_printer"  [(ngModel)]="etiquetas_printer" ></ion-input>
+<!--
+        <ion-select [disabled]="!status_csagent || true" cancelText="Cancelar" okText="Seleccionar"
+           (ionChange)="selectChangePrinter($event,'etiquetas')" label="Impresora de Etiquetas" label-placement="floating"
+           fill="outline" placeholder="Seleccionar impresora" [(ngModel)]="etiquetas_printer" [value]="etiquetas_printer">
+           <ion-select-option value='no'>Sin seleccionar</ion-select-option>
+           <ion-select-option *ngFor="let item of list_printers"
+             [value]="item.impresora">{{item.impresora}}</ion-select-option>
+         </ion-select>
+        -->
+       </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-start" size="6" sixe-sm="12" sixe-xm="12">
+        <ion-input [disabled]="!status_csagent || true" label="Impresora de Facturas" label-placement="floating" fill="solid" placeholder="Nombre impresora"   [value]="facturas_printer"  [(ngModel)]="facturas_printer" ></ion-input>
+        <!--
+        <ion-select [disabled]="!status_csagent || true" cancelText="Cancelar" okText="Seleccionar"
+           (ionChange)="selectChangePrinter($event,'facturas')" label="Impresora de Facturas" label-placement="floating"
+           fill="outline" placeholder="Seleccionar impresora" [(ngModel)]="facturas_printer" [value]="facturas_printer">
+           <ion-select-option value='no'>Sin seleccionar</ion-select-option>
+           <ion-select-option *ngFor="let item of list_printers"
+             [value]="item.impresora">{{item.impresora}}</ion-select-option>
+         </ion-select>
+        -->
+       </ion-col>
+       <ion-col class="ion-text-start" size="6" sixe-sm="12" sixe-xm="12">
+        <ion-input [disabled]="!status_csagent || true" label="Impresora de Resultados" label-placement="floating" fill="solid" placeholder="Nombre impresora"   [value]="resultados_printer"  [(ngModel)]="resultados_printer" ></ion-input>
+       <!--
+        <ion-select [disabled]="!status_csagent || true" cancelText="Cancelar" okText="Seleccionar"
+           (ionChange)="selectChangePrinter($event,'facturas')" label="Impresora de Facturas" label-placement="floating"
+           fill="outline" placeholder="Seleccionar impresora" [(ngModel)]="resultados_printer" [value]="resultados_printer">
+           <ion-select-option value='no'>Sin seleccionar</ion-select-option>
+           <ion-select-option *ngFor="let item of list_printers"
+             [value]="item.impresora">{{item.impresora}}</ion-select-option>
+         </ion-select>
+        -->
+       </ion-col>
+    </ion-row>
+<!--
+<ion-row>
+  <ion-col><h6>General</h6></ion-col>
+</ion-row>
+<ion-row>
+
+  <ion-col class="ion-text-start" size="6" sixe-sm="12" sixe-xm="12">
+    <ion-select disabled="true" cancelText="Cancelar" okText="Seleccionar" (ionChange)="selectChangeOrigen($event)"
+      label="Origen Predeterminado" label-placement="floating" fill="outline" [value]="origen_lab.cod_ori">
+      <ion-select-option value='no'>Sin seleccionar</ion-select-option>
+      <ion-select-option *ngFor="let item of list_origen" [value]="item.cod_ori">{{item.des_ori}}</ion-select-option>
+    </ion-select>
+  </ion-col>
+  <ion-col size="6" sixe-sm="12" sixe-xm="12">
+    <ion-select  disabled="true" cancelText="Cancelar" okText="Seleccionar" [(ngModel)]="planSelected" label="Plan Predeterminado" label-placement="floating" fill="outline"
+      (ionChange)="savePlan($event)">
+      <div *ngFor="let item of listSeguro ">
+        <ion-select-option disabled=true>{{item.des_seg}}</ion-select-option>
+        <ion-select-option [value]="item2" *ngFor="let item2 of item.Plan">{{item2.des_plan}}
+        </ion-select-option>
+      </div>
+    </ion-select>
+
+  </ion-col>
+  
+</ion-row>
+    -->
+
+  </ion-grid>
+
+
+
+  <!-- /////////////////  Pop overs  /////////////////////////// ->
+  <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+    <ng-template>
+      <ion-content>
+        <ion-list class="list_print">
+          <ion-item *ngFor="let item of list_printers" [button]="true" [detail]="false"
+            (click)="SelectImpresora(item.impresora)">{{item.impresora}}</ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+  <-- ///////////////// end Pop overs  /////////////////////////// -->
+</ion-content>

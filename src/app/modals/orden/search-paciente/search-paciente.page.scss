@@ -1,0 +1,156 @@
+.item_custom{
+  --min-height: 10px;
+  padding: 0;
+    border: solid 1.3px #dbdadf;
+    margin: 5px 5px;
+    border-radius: 5px;
+    --background: #fbfbfb;
+    color: black;
+    top:2px;
+}
+
+
+
+
+.item_custom ion-icon{
+  color: black;
+  font-size: unset;
+  margin: auto;
+  margin-right: 10px;
+}
+.item_custom ion-input{
+//  text-transform: uppercase;
+  font-size: revert;
+  color: black;
+    --min-height:40px !important;
+   min-height: 40px !important;
+}
+
+.item_custom:hover{
+  border-bottom: solid 2px #15a5e2;
+  
+   ion-icon{
+    color: #15a5e2 !important;
+  }
+  
+}
+////////////////////////////
+.item_custom_search_medico{
+  --min-height: 10px;
+  padding: 0;
+    border: solid 1.3px #dbdadf;
+    border-radius: 5px;
+    --background: #fbfbfb;
+    color: black;
+    top:2px;
+}
+.item_custom_search_medico ion-icon{
+  color: black;
+  font-size: unset;
+  margin: auto;
+  margin-right: 10px;
+}
+.item_custom_search_medico ion-input{
+//  text-transform: uppercase;
+  font-size: revert;
+  color: black;
+    --min-height:40px !important;
+   min-height: 40px !important;
+}
+
+.item_custom_search_medico:hover{
+  border-bottom: solid 2px #15a5e2;
+   ion-icon{
+    color: #15a5e2 !important;
+  }
+  
+}
+
+
+
+///////////////////////////////
+
+.label_custom
+{
+  color: #6d6d6d;
+  font-weight: 600;
+  font-size: small;
+  padding-left: 3px;
+}
+
+ion-card-content{
+height: 100%;
+}
+ion-col{
+margin: auto;
+}
+
+.card_table{
+// height: 57%;
+margin-top: 0px;
+}
+.tbl_header{
+background: #15a5e2;
+color: white;
+font-weight: bold;
+}
+.row_datail_result{
+border-bottom: solid 0.2px #f1ecec;
+color: #b1b1b1;
+}
+.sin_pintar_row {
+background-color: white;
+}
+
+.pintado_row {
+background-color: #f5f5f5;
+}
+
+.row_datail_result:hover{
+background: #f0f8ff;
+color: #3880ff;
+cursor: pointer;
+border-top: solid 0.2px #3880ff;
+border-bottom: solid 0.2px #3880ff;
+}
+.div_container{
+height: 78%;
+  overflow: scroll;
+  .col_detail_result{
+    font-size: smaller;      
+    color: #b1b1b1;
+  }
+}
+
+
+.btn_cerrar {
+position: absolute;
+z-index: 9999;
+top: 0;
+right: 0;
+margin: 0;
+padding: 0;
+ion-icon {
+  color: #fff;
+}
+}
+
+.grid_padding{
+padding-right: 10px;
+}
+.col-padding{
+padding-right: 0px;
+}
+.ion_text{
+color: #086a9c;
+}
+.style_icon{
+margin-left: auto; 
+margin-right: auto;
+}
+.height{
+height: 3pc;
+}
+.mayusculas_nuombre_doctor{
+text-transform: uppercase;
+}

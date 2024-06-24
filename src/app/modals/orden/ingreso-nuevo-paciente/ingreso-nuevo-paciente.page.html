@@ -1,0 +1,539 @@
+
+<ion-toolbar class="ion-text-center toolbar-modal" style="padding-right: 0px;">
+  <div class="titulo">
+    <!-- <h2 style="">FORMULARIO PACIENTE</h2> -->
+    <h2>Formulario Paciente</h2>
+
+  </div>
+    <ion-button color="danger" expand="full" (click)="check_Formulario_Vacio(input_cod_pac)" class="btn_cerrar" shape='' size='small'>
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+<ion-content>
+    <ion-grid>
+
+      <ion-accordion-group [multiple]="false" [value]="['first','third']">
+        <ion-accordion value="first">
+       <ion-item slot="header" color="light">
+         <ion-label class="white-text">DATOS PACIENTE</ion-label>
+       </ion-item>
+       <div class="ion-padding" slot="content">
+
+
+
+        <ion-row>
+          <ion-col size="8" size-xm="8" size-sm="8" size-md="8" size-lg="8" size-xl="8" style="padding-left: 0px;">
+
+            <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+            label="CEDULA"
+            label-placement="floating"
+            placeholder="Enter text"
+            [class.input-focused]="inputFocusedCedula"
+            (ionFocus)="onInputFocus()"
+            (ionBlur)="onInputBlur()"
+            [(ngModel)]="input_id">
+          </ion-input>
+            <ion-input *ngIf="!bandera_ios" class="input-con-sombra tema" label="Cédula" label-placement="floating" fill="outline"
+            [placeholder]="'Ingreso de cédula'" type="text" [value]="input_id" [(ngModel)]="input_id"
+            (keyup)="onDateKeyCedula($event)" [attr.max]="getValidarcedula()">
+                    </ion-input>
+
+            <ion-label *ngIf="esCedulaValidaennumero === -1" position="stacked"
+
+            [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px; font-size: 11px;color:gainsboro">[N/A]</ion-label>
+
+            <ion-label *ngIf="esCedulaValidaennumero === 0" position="stacked"
+
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;color:gainsboro">Cedula Correcta</ion-label>
+
+          <ion-label *ngIf="esCedulaValidaennumero === 1" position="stacked"
+
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;color:gainsboro">Cedula Incorrecta</ion-label>
+
+           <ion-label *ngIf="esCedulaValidaennumero === 2" position="stacked"
+
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;color:gainsboro">Pasaporte</ion-label>
+
+           <ion-label *ngIf="esCedulaValidaennumero === 3" position="stacked"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;color:gainsboro">Pasaporte</ion-label>
+
+           <ion-label *ngIf="esCedulaValidaennumero === 4" position="stacked"
+
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;color:gainsboro">Ruc</ion-label>
+
+          <ion-label *ngIf="esCedulaValidaennumero === 5" position="stacked"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;color:gainsboro">Ruc</ion-label>
+
+          </ion-col>
+
+          <ion-col size="4" size-sm="4" size-md="4" size-lg="4" size-xl="4">
+
+            <!-- <ion-input class="input-con-sombra" label="Cod Paciente" label-placement="floating" fill="outline"
+        placeholder="'Codigo Paciente'" [(ngModel)]="input_cod_pac">
+      </ion-input> -->
+
+      <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+      label="CODIGO"
+      label-placement="floating"
+      placeholder="Enter text"
+       autofocus="false"
+      [(ngModel)]="input_cod_pac" readonly>
+    </ion-input>
+      <ion-input *ngIf="!bandera_ios" class="input-con-sombra" label="CODIGO" label-placement="floating" fill="outline"
+      placeholder="'CODIGO'" [(ngModel)]="input_cod_pac" readonly>
+              </ion-input>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+        <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 10px;padding-left:0px;">
+          <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+          label="NOMBRES PACIENTE"
+          label-placement="floating"
+          placeholder="Enter text"
+          [class.input-focused]="inputFocused"
+          (ionFocus)="onInputFocus()"
+          (ionBlur)="onInputBlur()"
+          [(ngModel)]="input_nombre">
+        </ion-input>
+          <ion-input *ngIf="!bandera_ios" class="input-con-sombra" placeholder="'Ingreso de nombre'" label="Nombres Paciente" label-placement="floating" fill="outline"
+                  placeholder="'Ingreso de nombre'" [(ngModel)]="input_nombre" (input)="onInputChange()" style="padding: 10px;">
+                  </ion-input>
+                </ion-col>
+
+
+            <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5" style="padding-top: 10px;padding-left:0px;">
+
+              <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+              label="APELLIDOS PACIENTE"
+              label-placement="floating"
+              placeholder="Enter text"
+              [class.input-focused]="inputFocused"
+              (ionFocus)="onInputFocus()"
+              (ionBlur)="onInputBlur()"
+              [(ngModel)]="this.input_apellido"
+            ></ion-input>
+              <ion-input *ngIf="!bandera_ios" class="input-con-sombra" placeholder="'Ingreso de nombre'" label="Apellido Paciente" label-placement="floating" fill="outline"
+             placeholder="'Ingreso de nombre'" [(ngModel)]="this.input_apellido" (input)="onInputChange()" style="padding: 10px;">
+                      </ion-input>
+
+
+
+
+              <!-- <ion-input class="input-con-sombra" label="Apellidos Paciente" label-placement="floating" fill="outline"
+                [placeholder]="'Ingreso de apellido'" [(ngModel)]="this.input_apellido" (ionChange)="onInputChange()">
+              </ion-input> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+
+             <!-- <ion-col size="8" size-xm="8" size-sm="8" size-md="8" size-lg="8" size-xl="8">
+         <input class="inputdate" type="date" fill="outline" [(ngModel)]="input_fec_nac"
+         (keyup)="onDateKeyUp($event, input_fec_nac)"  [attr.max]="minDate" />
+            </ion-col> -->
+
+            <!-- <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios" -->
+            <ion-col size="7" size-xm="7" size-sm="7" size-md="7" size-lg="7" size-xl="7" style="padding-left: 0px;">
+              <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+                label="FECHA DE NACIMIENTO"
+                label-placement="stacked"                
+                [class.input-focused]="inputFocused"
+                (ionFocus)="onInputFocus()"
+                (ionBlur)="onInputBlur()"
+                [(ngModel)]="input_fec_nac"
+                (ngModelChange)="onInputChange2($event)"
+                [attr.max]="minDate"
+                maxlength="10"
+                inputmode="numeric">
+             </ion-input> 
+              <input *ngIf="!bandera_ios" class="inputdate" type="date" fill="outline" [(ngModel)]="input_fec_nac"
+                (ngModelChange)="onInputChange2($event)" [attr.max]="minDate"/>
+            </ion-col>
+           
+
+            <ion-col size="5" size-xm="5" size-sm="5" size-md="5" size-lg="5" size-xl="5">
+              <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+              label="EDAD"
+              label-placement="floating"
+              placeholder="Enter text"
+              [class.input-focused]="inputFocused"
+              (ionFocus)="onInputFocus()"
+              (ionBlur)="onInputBlur()"
+              [(ngModel)]="input_edad" readonly (keyup)="EventoCalcularFecha($event)"  [attr.max]="calcularFechaNacimiento(edad)"
+            ></ion-input>
+              <ion-input *ngIf="!bandera_ios" class="input-con-sombra" placeholder="'INGRESO DE EDAD'" label="EDAD" label-placement="floating" fill="outline"
+             placeholder="'EDAD'" [(ngModel)]="input_edad" readonly (keyup)="EventoCalcularFecha($event)"  [attr.max]="calcularFechaNacimiento(edad)">
+                      </ion-input>
+
+              <!-- <ion-input class="input-con-sombra" label="Edad" label-placement="floating" fill="outline"
+              [placeholder]="'Edad' " [(ngModel)]="edad" [value]="edad" readonly (keyup)="EventoCalcularFecha($event)"  [attr.max]="calcularFechaNacimiento(edad)">
+            </ion-input> -->
+            </ion-col>
+
+
+              </ion-row>
+
+        <ion-row>
+            <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+               <ion-radio-group [(ngModel)]="input_genero" value="M">
+                 <ion-row>
+                   <ion-col size="6" size-xm="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+                    <label style="margin: 2pc;background: #84c6ed;border-radius: 11px;color: azure;border:3px solid #84c6ed">Masculino</label>
+                     <ion-item lines="none" class="item-azul">
+                       <ion-icon name="man-outline" style="color: #84c6ed;"></ion-icon>
+                       <ion-radio slot="start" value="M" class="item-azul"></ion-radio>
+                     </ion-item>
+                   </ion-col>
+                   <ion-col size="6" size-xm="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+                    <label style="margin: 2pc;background: #ffd4db;color: azure;border-radius:11px;border:4px solid #ffd4db">Femenino</label>
+                     <ion-item lines="none" class="item-rosado">
+                       <ion-icon name="woman-outline" style="color: #ffd4db;"></ion-icon>                       
+                       <ion-radio slot="start" value="F" class="radio-rosado"></ion-radio>
+                     </ion-item>
+                   </ion-col>
+                 </ion-row>
+               </ion-radio-group>
+             </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-left: 0px;">
+            <!-- <ion-input class="input-con-sombra_email" label="CORREO" [placeholder]="'INGRESA EMAIL' "
+            label-placement="floating" fill="outline" [placeholder]="'INGRESA CORREO ELECTRONICO' " [(ngModel)]="input_mail" (ionChange)="onInputChangeMinusculas()">
+          </ion-input> -->
+
+          <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+          label="CORREO"
+          label-placement="floating"
+          placeholder="Enter text"
+          [class.input-focused]="inputFocused"
+          (ionFocus)="onInputFocus()"
+          (ionBlur)="onInputBlur()"
+          [(ngModel)]="input_mail"></ion-input>
+          <ion-input *ngIf="!bandera_ios" class="input-con-sombra" placeholder="'INGRESO DE CORREO'" label="CORREO" label-placement="floating" fill="outline"
+         placeholder="'CORREO'" [(ngModel)]="input_mail" (input)="onInputChange()" style="padding: 10px;">
+                  </ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6" size-sm="6" size-md="6" size-lg="6" size-xl="6" style="padding-left: 0px;">
+
+            <!-- <ion-input class="input-con-sombra" label="Celular" [placeholder]="'Ingresa Celular' "
+            label-placement="floating" fill="outline" [(ngModel)]="input_celular">
+          </ion-input> -->
+          <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+          label="CELULAR"
+          label-placement="floating"
+          placeholder="Enter text"
+          [class.input-focused]="inputFocused"
+          (ionFocus)="onInputFocus()"
+          (ionBlur)="onInputBlur()"
+          [(ngModel)]="input_celular"></ion-input>
+          <ion-input *ngIf="!bandera_ios" class="input-con-sombra" placeholder="'INGRESO DE CELULAR'" label="CELULAR" label-placement="floating" fill="outline"
+         placeholder="'CELULAR'" [(ngModel)]="input_celular" (input)="onInputChange()" style="padding: 10px;">
+                  </ion-input>
+
+        </ion-col>
+
+          <ion-col size="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+
+            <!-- <ion-input class="input-con-sombra" label="Teléfono" [placeholder]="'Ingresa Teléfono' "
+            label-placement="floating" fill="outline" [(ngModel)]="input_telefono">
+          </ion-input> -->
+          <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+          label="TELEFONO"
+          label-placement="floating"
+          placeholder="Enter text"
+          [class.input-focused]="inputFocused"
+          (ionFocus)="onInputFocus()"
+          (ionBlur)="onInputBlur()"
+          [(ngModel)]="input_telefono"></ion-input>
+          <ion-input *ngIf="!bandera_ios" class="input-con-sombra" placeholder="'INGRESO DE TELEFONO'" label="TELEFONO" label-placement="floating" fill="outline"
+         placeholder="'TELEFONO'" [(ngModel)]="input_telefono" (input)="onInputChange()" style="padding: 10px;">
+                  </ion-input>
+          </ion-col>
+        </ion-row>
+    </div>
+  </ion-accordion>
+
+           <ion-accordion value="second">
+        <ion-item slot="header" color="light" class="custom-header">
+          <ion-label class="white-text">INFORMACION PERSONAL</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content" style="padding-top: 8px;padding-bottom: 8px;">
+
+          <ion-row>
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 0px;">
+              <ion-list style="padding-right: 0px;padding-bottom: 0px;padding-left: 0px;border-radius: 3px;">
+                <ion-select class=" input-con-sombra_select" [placeholder]="'Pais de Población'" interface="popover"
+                  toggleIcon="add" expandedIcon="remove" [(ngModel)]="this.input_pob"
+                  style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);padding-bottom: 16px;">
+                  <ion-select-option *ngFor="let poblacion of array_poblacion" [value]="poblacion.cod_pob">
+                    {{ poblacion.cod_pob }} - {{ poblacion.cod_niv === 1 ? 'Provincia' : 'Ciudad' }} - {{
+                    poblacion.des_pob }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-list>
+            </ion-col>
+
+            
+
+            <ion-col size="8" size-sm="8" size-md="8" size-lg="8" size-xl="8">
+
+
+              <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+              label="DIRECCION"
+              label-placement="floating"
+              placeholder="Enter text"
+              [class.input-focused]="inputFocused"
+              (ionFocus)="onInputFocus()"
+              (ionBlur)="onInputBlur()"
+              [(ngModel)]="input_direccion"></ion-input>
+              <ion-input *ngIf="!bandera_ios" class="input-con-sombra" placeholder="'INGRESO DE DIRECCION'" label="DIRECCION" label-placement="floating" fill="outline"
+             placeholder="'DIRECCION'" [(ngModel)]="input_direccion" (input)="onInputChange()" style="padding: 10px;">
+                      </ion-input>
+
+              <!-- <ion-input class="input-con-sombra" label="Dirección" [value]="this.input_direccion"
+                [placeholder]="'Ingresa Dirección' " label-placement="floating" fill="outline"
+                [(ngModel)]="input_direccion"  >
+              </ion-input> -->
+            </ion-col>
+            <ion-col size="4" size-sm="4" size-md="4" size-lg="4" size-xl="4">
+              <!-- <ion-input class="input-con-sombra" label="Código Postal" [placeholder]="'Ingresa Código Postal' "
+              label-placement="floating" fill="outline" [(ngModel)]="this.input_cp">
+            </ion-input> -->
+
+            <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+            label="C. POSTAL"
+            label-placement="floating"
+            placeholder="Enter text"
+            [class.input-focused]="inputFocused"
+            (ionFocus)="onInputFocus()"
+            (ionBlur)="onInputBlur()"
+            [(ngModel)]="this.input_cp"></ion-input>
+            <ion-input *ngIf="!bandera_ios" class="input-con-sombra" class="input-con-sombra" label="Código Postal" [placeholder]="'Ingresa Código Postal' "
+            label-placement="floating" fill="outline" [(ngModel)]="this.input_cp">
+                    </ion-input>
+
+
+
+            </ion-col>
+          </ion-row>
+<ion-list style="padding-bottom: 0px;padding-top: 0px;">
+  <ion-item-group>
+    <ion-row>
+    <ion-item-divider class="custom-divider">
+      <ion-label>Lugar de Nacimiento</ion-label>
+    </ion-item-divider>
+  </ion-row>
+            <ion-row>
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-bottom: 0px;padding-top: 10px;">
+                <ion-list style="padding-bottom: 0px;">
+                  <ion-select class="input-con-sombra_select" [placeholder]="'Pais de Origen'"
+                    [(ngModel)]="this.input_pais_origen" style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);">
+                    <ion-select-option value="ECU">Ecuador</ion-select-option>
+                  </ion-select>
+                </ion-list>
+              </ion-col>
+
+              </ion-row>
+
+              <ion-row>
+           <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 8px;padding-bottom: 8px;">
+              <!-- <ion-input class="input-con-sombra" label="Ciudad" [value]="this.input_ciudad"
+                [placeholder]="'Ingresa la Ciudad' " label-placement="floating" fill="outline"
+                [(ngModel)]="this.input_ciudad">
+              </ion-input> -->
+
+
+              <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+              label="CUIDAD"
+              label-placement="floating"
+              placeholder="Enter text"
+              [class.input-focused]="inputFocused"
+              (ionFocus)="onInputFocus()"
+              (ionBlur)="onInputBlur()"
+              [(ngModel)]="input_ciudad"></ion-input>
+              <ion-input *ngIf="!bandera_ios"class="input-con-sombra" label="Ciudad" [value]="this.input_ciudad"
+              [placeholder]="'Ingresa la Ciudad' " label-placement="floating" fill="outline"
+              [(ngModel)]="this.input_ciudad">
+                      </ion-input>
+            </ion-col>
+           </ion-row>
+          </ion-item-group>
+        </ion-list>
+
+        <ion-item-divider class="custom-divider">
+          <ion-label>Estado</ion-label>
+          </ion-item-divider>
+
+           <ion-row>
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 8px;">
+              <ion-list style="padding-right: 0px;padding-bottom: 0px;padding-left: 0px; border-radius: 3px;">
+                <ion-select class="input-con-sombra_select" [placeholder]="'Referencia'" [(ngModel)]="this.input_referencia"
+                  style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);">
+                  <ion-select-option *ngFor="let referencia of array_referencia"
+                    [value]="referencia.cod_ref">{{referencia.cod_ref }} - {{referencia.des_ref}}</ion-select-option>
+                </ion-select>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        
+          <ion-row>
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 8px;">
+              <ion-select class="input-con-sombra_select" [placeholder]="'Estado Civil'" [(ngModel)]="this.input_estadoCivil"
+                style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);">
+                <ion-select-option>Soltero</ion-select-option>
+                <ion-select-option>Casado</ion-select-option>
+                <ion-select-option>Divorciado</ion-select-option>
+                <ion-select-option>Viudo</ion-select-option>
+                <ion-select-option>Union Libre</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+        <ion-row>
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 8px;">
+              <ion-select [placeholder]="'Instrucción'" class="input-con-sombra_select" [(ngModel)]="this.input_instruccion"
+              style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);">
+              <ion-select-option>Otro</ion-select-option>
+              <ion-select-option>Primaria</ion-select-option>
+              <ion-select-option>Secundaria</ion-select-option>
+              <ion-select-option>Superior</ion-select-option>
+            </ion-select>
+            </ion-col>
+
+          </ion-row>
+
+        <ion-row>
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 8px;">
+              <!-- <ion-input class="input-con-sombra" label="Ocupación" [value]="this.input_ocupacion"
+              [placeholder]="'Ingresa la Ocupación' " label-placement="floating" fill="outline"
+              [(ngModel)]="this.input_ocupacion" (ionChange)="onInputChange()">
+            </ion-input> -->
+
+
+
+
+            <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+            label="OCUPACION"
+            label-placement="floating"
+            placeholder="Enter text"
+            [class.input-focused]="inputFocused"
+            (ionFocus)="onInputFocus()"
+            (ionBlur)="onInputBlur()"
+            [(ngModel)]="this.input_ocupacion"></ion-input>
+            <ion-input *ngIf="!bandera_ios"class="input-con-sombra" label="OCUPACION" [value]="this.input_ocupacion"
+            [placeholder]="'Ingresa la Ciudad' " label-placement="floating" fill="outline"
+            [(ngModel)]="this.input_ocupacion">
+                    </ion-input>
+
+
+
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="third">
+        <ion-item slot="header" color="light">
+          <ion-label class="white-text">OBSERVACION</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+
+          <ion-row>
+            <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+            <ion-select [placeholder]="'Información Crediticia'" class="input-con-sombra_select"
+            [(ngModel)]="this.input_info_crediticia"
+            style="height: 12px; border: 0.01px solid #b3b3b3;">
+            <ion-select-option>[Ninguna]</ion-select-option>
+            <ion-select-option>Cobrar Siempre</ion-select-option>
+            <ion-select-option>Cortesia (No Cobrar)</ion-select-option>
+          </ion-select>
+          </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8" size-xm="8" size-sm="8" size-md="8" size-lg="8" size-xl="8">
+              
+              <!-- <ion-input class="input-con-sombra" label="Etnia/Raza:" [value]="this.input_etnia"
+                [placeholder]="'Ingresa la Etnia/Raza'" label-placement="floating" fill="outline"
+                [(ngModel)]="this.input_etnia" (ionChange)="onInputChange()">
+              </ion-input> -->
+
+            <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+            label="ETNIA/RAZA"
+            label-placement="floating"
+            placeholder="Enter text"
+            [class.input-focused]="inputFocused"
+            (ionFocus)="onInputFocus()"
+            (ionBlur)="onInputBlur()"
+            [(ngModel)]="this.input_etnia"></ion-input>
+            <ion-input *ngIf="!bandera_ios"class="input-con-sombra" label="ETNIA/RAZA:" [value]="this.input_etnia"
+            [placeholder]="'Ingresa la Etnia/Raza'" label-placement="floating" fill="outline"
+            [(ngModel)]="this.input_etnia" (ionChange)="onInputChange()">
+                    </ion-input>
+
+
+            </ion-col>
+            <ion-col size="4" size-xm="4" size-sm="4" size-md="4" size-lg="4" size-xl="4">
+              <!-- <ion-input class="input-con-sombra" label="Tipo de Sangre" [value]="this.input_tipo_sangre"
+                [placeholder]="'Ingresa el Tipo de Sangre' " label-placement="floating" fill="outline"
+                [(ngModel)]="this.input_tipo_sangre" (ionChange)="onInputChange()">
+              </ion-input> -->
+
+
+              <ion-input [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+              label="T. SANGRE"
+              label-placement="floating"
+              placeholder="Enter text"
+              [class.input-focused]="inputFocused"
+              (ionFocus)="onInputFocus()"
+              (ionBlur)="onInputBlur()"
+              [(ngModel)]="this.input_tipo_sangre"></ion-input>
+              <ion-input *ngIf="!bandera_ios"  class="input-con-sombra" label="Tipo de Sangre" [value]="this.input_tipo_sangre"
+              [placeholder]="'Ingresa el Tipo de Sangre' " label-placement="floating" fill="outline"
+              [(ngModel)]="this.input_tipo_sangre" (ionChange)="onInputChange()">
+                      </ion-input>
+
+            </ion-col>
+          </ion-row>
+
+            <ion-row>
+              <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                <!-- <ion-textarea class="input-con-sombra" label="Patologias del Paciente" [value]="this.input_patol_pac"
+                  [placeholder]="'Ingresa las Patologias del Paciente' " label-placement="floating" fill="outline"
+                  [(ngModel)]="this.input_patol_pac" (ionChange)="onInputChange()">
+                </ion-textarea> -->
+
+
+
+
+                <ion-textarea [ngClass]="{'mi-ion-input': bandera_ios}" *ngIf="bandera_ios"
+                label="PATOLOGIAS DEL PACIENTE"
+                label-placement="floating"
+                placeholder="Enter text"
+                [class.input-focused]="inputFocused"
+                (ionFocus)="onInputFocus()"
+                (ionBlur)="onInputBlur()"
+                [(ngModel)]="this.input_patol_pac"></ion-textarea>
+                <ion-textarea *ngIf="!bandera_ios" class="input-con-sombra" label="Patologias del Paciente" [value]="this.input_patol_pac"
+                  [placeholder]="'Ingresa las Patologias del Paciente' " label-placement="floating" fill="outline"
+                  [(ngModel)]="this.input_patol_pac" (ionChange)="onInputChange()">
+                </ion-textarea> 
+
+
+                
+              </ion-col>
+           </ion-row>
+        </div>
+      </ion-accordion>
+
+    </ion-accordion-group>
+    </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="bandera_editar" (click)="CheckPaciente()" expand="full" color="success">Crear Paciente</ion-button>
+  <ion-button *ngIf="!bandera_editar" (click)="actualizarPaciente(this.input_cod_pac)" expand="full" color="success">Actualizar Paciente</ion-button>
+</ion-footer>

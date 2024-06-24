@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Nueva guia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-toolbar>Filtro</ion-toolbar>
+  <ion-grid>
+    <ion-row class="fechas">
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="stacked">Desde</ion-label>
+          <ion-input type="date" position="stacked" [value]="fecha_desde| date: 'yyyy-MM-dd'"
+            [(ngModel)]="fecha_desde" (ionChange)="validaFecha()"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-item>
+          <ion-label position="stacked">Hasta</ion-label>
+          <ion-input type="date" position="stacked" [value]="fecha_hasta| date: 'yyyy-MM-dd'"
+            [(ngModel)]="fecha_hasta" (ionChange)="validaFecha()"></ion-input>
+        </ion-item>
+      </ion-col>
+       </ion-row>
+</ion-grid>
+<ion-grid>
+  <ion-row>
+    <ion-col>Nro Orden</ion-col>
+    <ion-col>Fecha Ingreso</ion-col>
+    <ion-col>Añadir guia</ion-col>
+  </ion-row>
+  <ion-row *ngFor="let item of listadoOrden">
+  <ion-col>{{item.nro_ord}}</ion-col>
+  <ion-col>{{item.fec_ini}}</ion-col>
+  <ion-col *ngIf="item.tracking_uuid !='' || item.tracking_uuid!=null"><ion-badge>{{item.tracking_uuid}}</ion-badge></ion-col>
+  <ion-col *ngIf="item.tracking_uuid =='' || item.tracking_uuid==null"><ion-checkbox (ionChange)="checkedGuia($event,item)"></ion-checkbox></ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-button (click)="presentAlertConfirm()">Crear Guia</ion-button>
+</ion-footer>

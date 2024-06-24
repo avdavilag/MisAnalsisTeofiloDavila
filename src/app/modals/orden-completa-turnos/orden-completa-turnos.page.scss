@@ -1,0 +1,104 @@
+// ion-col {
+//     background-color: #135d54;
+//     border: solid 1px #fff;
+//     color: #fff;
+//     text-align: center;
+//   }
+/* En tu archivo .scss */
+.ion-col-even-row {
+  background-color: aliceblue;
+  // border: solid 1px #8edbf6;
+  color: #808080;
+  text-align: center;
+}
+
+.ion-col-odd-row {
+  background-color: #fff;
+  // border: solid 1px #8edbf6;
+  color: #808080;
+  text-align: center;
+}
+.ion-col-even-row_t {
+  background-color: aliceblue;
+  // border: solid 1px #8edbf6;
+  color: #b3b3b3;
+  text-align: center;
+}
+
+.ion-col-odd-row_t {
+  background-color: #fff;
+  // border: solid 1px #8edbf6;
+  color: #b3b3b3;
+  text-align: center;
+}
+
+.fila_titulos{
+  background-color: #3880ff;
+ // border: solid 1px #fff;
+  color: #fff;
+  text-align: center;
+}
+.fila_titulos_turnos{
+  background-color: #3880ff;
+ // border: solid 1px #fff;
+  color: #fff;
+  text-align: center;
+}
+.btn_cerrar {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  ion-icon {
+    color: #fff;
+  }
+}
+
+
+.btn_nueva_orden {
+  position: absolute;
+  z-index: 9999;
+  height: 100%;
+  width: 100%;
+  ion-icon {
+    color: #fff;
+  }
+}
+
+
+ion-skeleton-text {
+  --border-radius: 9999px;
+  --background: rgba(188, 0, 255, 0.065);
+  --background-rgb: 188, 0, 255;
+}
+.ver 
+   ion-icon {
+  font-size: 64px;
+}
+
+.cursiva {
+  font-style: oblique;
+}
+
+.mano-escrita {
+  font-family: 'TuFuenteManuscrita', cursive;
+  font-size: smaller;
+  color: gray;
+}
+.mano-escrita_mail {
+  font-family: 'TuFuenteManuscrita', cursive;
+  font-size: x-small;
+  color: gray;
+}
+.icono-calendario {
+  margin: 0px 4px -1px -1px;
+  color: #fc4b08;
+}
+.icono-color-azul{
+  margin: 0px 4px -1px -1px;
+  color:#3880ff
+}
+
+

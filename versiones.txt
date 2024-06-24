@@ -1,0 +1,9 @@
+Version	Comentario	Variables	cs-graphql	cs-intra	otro
+
+6.67	Default formato intra y correccion auditoria intra whatsapp	tipoWhatsapp formatodefIntra	"no"	"no"	"no" 
+3.68	Unido cambios anto ingreso orden masive orden	"no"	si	si	"no" 
+3.70	Cambio de version de ionic 7	"no"	"no"	"no"	"no" 
+3.74	La politica y permite solo adjuntos	permiteSoloAdjuntos	si	si	"no" 
+3.76	Texto en login pacientes y join con cambios anthony(no se que se cambio)	activaNotaPaciente	no	no	Se a¤adio el manual del misanalisis y para cambiar el mensaje en /docs 
+3.79	Modal de timeline	"no"	si	no	"no" 
+3.80	Subida de hospitalario	"no"	si	no	"no" 

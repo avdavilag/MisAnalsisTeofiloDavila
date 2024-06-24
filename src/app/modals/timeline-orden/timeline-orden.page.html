@@ -1,0 +1,95 @@
+  
+  <ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+    <ion-icon name="close" ></ion-icon>
+  </ion-button>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>LINEA DE TIEMPO ORDEN {{nroOrden}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">LINEA DE TIEMPO</ion-title>
+    </ion-toolbar>
+  </ion-header>
+    <ion-grid class="grid-orden">    
+      <ion-row>
+       <!-- 
+        <ion-col size="4"><h4>ORDEN</h4></ion-col>
+       -->
+        <ion-col size="4" *ngIf="dataUsuarios&&dataUsuarios.length>0"><h4>Creación</h4></ion-col>
+        <ion-col size="4 " *ngIf="dataUsuarios&&dataUsuarios.length>0"><h4>Last User</h4> </ion-col>
+    </ion-row>
+      <ion-row>
+        <!-- 
+ <ion-col  size="4">
+          <ion-item lines="none">
+            <ion-input [(ngModel)]="nroOrden"  (keyup.enter)="consultarOperacion()"></ion-input>
+            <ion-button class="btn-buscar" color="primary" slot="end" (click)="consultarOperacion()">Buscar</ion-button>
+          </ion-item>
+        </ion-col>
+        -->
+       
+        <ion-col size="4" *ngIf="dataUsuarios&&dataUsuarios.length>0"> <input type="datetime-local" [value]="convertirFechaMilisegundos(dataUsuarios[0].fec_ini_ord)"  (input)="actualizarFechas($event)">
+        </ion-col>
+        <ion-col size="4" *ngIf="dataUsuarios&&dataUsuarios.length>0"> 
+          <select name="users" id="users" [(ngModel)]="dataUsuarios[0].last_user_ord">
+            <option *ngFor="let item of usuarios" [value]="item.usuario">{{item.nom_usu}}</option>
+          </select>       
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="content-grid-blank" *ngIf="!dataUsuarios||dataUsuarios.length==0">NO DATA</div>
+    <div class="content-grid">
+      <ion-grid class="grid-peticiones" *ngIf="dataUsuarios&&dataUsuarios.length>0">    
+      <ion-row>
+        <ion-col size="3"  class="grid-label"><div>Peticiones</div></ion-col>
+        <ion-col size="3"  class="grid-label"><div>Creación</div> </ion-col>
+        <ion-col size="3"  class="grid-label"><div>F. Validación</div></ion-col>
+        <ion-col size="2"  class="grid-label"><div>Usr. Validación</div> </ion-col>
+        <ion-col size="1"  class="grid-label"><div></div> </ion-col>
+        <!--<ion-col size="1"> </ion-col>-->
+      </ion-row>
+      <ion-row *ngFor="let peticion of dataUsuarios">
+       
+        <ion-col size="3" class="pet-ana" >
+          <div>{{peticion.des_ana}}</div>
+          <div class="sts">{{peticion.des_sts}}</div>
+        </ion-col>
+        <ion-col size="3">
+          <input type="datetime-local" [value]="convertirFechaMilisegundos(peticion.fec_ini_pet)" (input)="actualizarFechaPeticion($event,peticion)">
+        </ion-col>
+        <ion-col size="3">
+          <div *ngIf="peticion.fec_error" class="fec-error">La fecha es menor que la creación</div>
+          <input type="datetime-local" [value]="convertirFechaMilisegundos(peticion.fec_val)" (input)="actualizarFechaValida($event,peticion)">
+        </ion-col>
+        <ion-col size="2">
+          <select name="users" id="users" [(ngModel)]="peticion.usu_val" >
+            <option *ngFor="let item of usuarios" [value]="item.usuario">{{item.nom_usu}}</option>
+          </select>
+         </ion-col>
+         <ion-col size="1">
+          <div>
+            <ion-button (click)="subeHospitalario(peticion.cod_ana,peticion.des_ana)" size="small" fill="clear" color="success">
+              <ion-icon  slot="icon-only" name="arrow-up-circle"></ion-icon>
+            </ion-button>
+          </div>
+         </ion-col>
+      </ion-row>
+      
+    </ion-grid>
+  </div>
+ 
+  <div class="btn-action">
+    <ion-row>
+      <ion-col>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="outline" color="secondary" (click)="cerrar()" >Cancelar</ion-button>
+        <ion-button fill="solid" color="secondary" (click)="guardaCambios()">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

@@ -1,0 +1,508 @@
+//////////Item Titulo paciente/////////////////
+.item_custom_paciente{
+  --min-height: 10px;
+  padding: 0;
+    border: solid 1.3px #dbdadf;
+    margin: -1px -2px;
+    border-radius: 5px;
+    --background: #fbfbfb;
+    color: blue ;
+}
+.item_custom_paciente ion-input{
+  text-transform: uppercase;
+  font-size: 12px;
+   color: black;
+     --min-height:30px !important;
+    min-height: 30px !important;    
+ }
+ .item_custom_paciente:hover{
+  border-bottom: solid 2px #4268ec;
+  
+   ion-icon{
+    color: #4268ec !important;
+  }
+  
+}
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+.input-con-sombra_email {
+  min-height: 41px;
+}
+
+
+/////////////////////////
+.item_custom{
+    --min-height: 10px;
+    padding: 0;
+      border: solid 1.3px #dbdadf;
+      margin: -1px -2px;
+      border-radius: 5px;
+      --background: #fbfbfb;
+      color: black;
+  }
+
+  
+  .toast-wrapper {
+    width: 40%;
+  }
+  
+  .item_custom ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom ion-input{
+   text-transform: uppercase;
+    font-size: revert;
+    color: black;
+      --min-height:30px !important;
+     min-height: 30px !important;
+  }
+  
+  .btn_cerrar {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    ion-icon {
+      color: #fff;
+    }
+  }
+  .container {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+  }
+  .card_cod_pac {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right:  42px;
+    margin: 0;
+    padding: 0;
+    
+   }
+
+  .item_custom:hover{
+    border-bottom: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+  .custom-header {
+    background-color: blue; /* Cambia "blue" al color deseado */
+    color: white; /* Cambia el color del texto si es necesario */
+  }
+  .ion-color-light {
+    --ion-color-base: #f4f5f8 !important;
+  }
+  
+  .ion-accordion-content .custom-path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 48;
+    fill: none;
+    color: white; /* Cambiar el color del trazo */
+    /* Otros estilos */
+  }
+  .white-text {
+    color: back !important; /* Cambia el color del texto a blanco */
+  }
+  .ionicon {
+    color: white;
+    stroke: currentcolor;
+  }
+  ion-accordion-group ion-accordion ion-item[slot="header"] ion-icon {
+    color: red !important; /* Reemplaza "red" con el color que desees */
+  }
+  //////////////////////////Anderson css mensaje cedulacion valida o no val
+  .label_custom
+  {
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+    padding-left: 9px;
+  }
+
+/////////////////////////Boton Titulo/////////////////
+
+
+
+/// ////////////////////////////////////////////////////
+
+
+   ////////////////////Boton para email//////////////////////////////
+   .item_custom1{
+    --min-height: -1px;
+    padding: 0px;
+      border: solid 1.3px #dbdadf;
+      margin: -1px -2px;
+      border-radius: 5px;
+      --background: #fbfbfb;
+      color: black;
+    }
+  
+  .item_custom1 ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom1 ion-input{
+    text-transform: lowercase;
+    font-size: revert;
+    color: black;
+      --min-height:30px !important;
+     min-height: 30px !important;
+  }
+  .item_custom1{
+    --min-height: 10px;
+   } 
+   //////////////////////////////////
+   /// //////////////////////////////////
+  .item_custom{
+    --min-height: 10px;
+   }
+  
+   
+   //////////////////fin de boton para email/////////////////////////
+   /// 
+   /// 
+   //////Convertidor de Mayusculas/////////////////////////////////
+   .uppercase-input::ng-deep input {
+    text-transform: uppercase;
+  }
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////   
+   /// /////////////////Boton input select//////////////////////////
+   .item_custom_select{
+    --min-height: 10px;
+    padding: 0px;
+      border: solid 2px #dbdadf;
+      margin: -9px 0px;
+      border-radius: 6px;
+      --background: #fbfbfb;
+      color: black;
+      height: 33px;
+      font-size: 10px; 
+  }
+  .item_custom_select ion-input{
+   text-transform: uppercase;
+    font-size: 5px;
+    color: red;
+      --min-height:10px !important;
+     min-height: 10px !important;
+  } 
+  .item_custom_select{
+    --min-height: 10px;
+   }
+  
+  //////////////////Select civil////////////////
+  
+  .item_custom_select-civil{
+    --min-height: 10px;
+    padding: 0px;
+      border: solid 2px #dbdadf;
+      margin: -9px 0px;
+      border-radius: 6px;
+      --background: #fbfbfb;
+      color: black;
+      width: 262px;
+      height: 33px;
+      font-size: 10px; 
+  }
+  .item_custom_select-civil ion-input{
+   text-transform: uppercase;
+    font-size: 5px;
+    color: red;
+      --min-height:10px !important;
+     min-height: 10px !important;
+  } 
+  .item_custom_select-civil{
+    --min-height: 10px;
+   }
+  
+   .custom-label_label1 {
+    color: #3db9b3;
+    padding-left: 185px;
+    margin: -4px 1px -2px;
+  }
+  
+  
+  .custom-label_label2 {
+    color: #3db9b3;
+    padding-left: 185px;
+    margin: -4px 40px -2px;
+  }
+  
+   ///////////////LUGAR DE NACIMIENTO////////////////////////////
+  .item_custom_lugar-naciemiento{
+    --min-height: 10px;
+    padding: 0px;
+      border: solid 2px #dbdadf;
+      margin: -9px 0px;
+      border-radius: 6px;
+      --background: #fbfbfb;
+      color: black;
+      width: 262px;
+      height: 47px;
+      font-size: 10px; 
+  }
+  .item_custom_lugar-naciemiento ion-input{
+   text-transform: uppercase;
+    font-size: 5px;
+    color: red;
+      --min-height:10px !important;
+     min-height: 10px !important;
+  } 
+  .item_custom_lugar-naciemiento{
+    --min-height: 10px;
+   }
+  
+   /// //////////////////////////////////////////////////////////
+   .cedula-valida-label {
+    padding: 4px;
+  }
+   .cedula-valida-verde {
+    padding-left: 1px;
+    background-color: #126208;
+    color: white;
+  }
+  .cedula-invalida-rojo {
+    padding-left: 1px;
+    background-color: #ff6666;
+    color: white;
+  }
+  .cedula-no-existe {
+    padding-left: 1px;
+    font-size: 13px;
+    background-color: #3a6dcb;
+    color: white;
+  }
+  .pasaporte-valida-verde {
+    padding-left: 8px;
+    background-color: #692e34;
+    color: white;
+  }
+  .pasaporte-invalida-rojo {
+    padding-left: 1px;
+    background-color: #692e34;
+    color: white;
+  }
+  .ruc-valida-verde {
+    padding-left: 8px;
+    background-color: #1b2d55;
+    color: white;
+  }
+    .mail_input{
+      text-transform: initial !important;
+    }
+    
+    .item_custom:hover{
+      border-bottom: solid 2px #4268ec;
+      
+       ion-icon{
+        color: #4268ec !important;
+      }
+      
+    }
+    
+    .label_custom
+  {
+      color: #6d6d6d;
+      font-weight: 800;
+      font-size: small;
+      padding-left: 0px;
+      font-size: 10px;
+     
+  }
+  .icono-azul {
+    color: blue;
+    background: blue;
+  }
+  .item-azul {
+    --background-hover: aqua;
+    margin: 5px;
+  }
+  .item-rosado {
+    --background-hover: HotPink;
+    margin: 5px;
+  }
+  .small-font {
+    font-size: 12px;
+  }
+  .inputdate{
+    min-height:50px;
+    width: 101.1%;
+    font-size: 14px;
+    padding-left: 11px;
+    border: solid 0.3px #b3b3b3;
+    margin: -1px -2px;
+    border-radius: 5px;
+    background: #f2f2f2;
+
+  }
+  
+  .inputdate:hover{
+    border-color: #2dd36f !important;
+    box-shadow: 0 0 3px #2dd36f !important;
+     ion-icon{
+      color: #2dd36f !important;
+    }
+    
+  }
+
+
+  .inputdate_ios{
+    min-height:56px;
+    width: 101.1%;
+    font-size: 14px;
+    padding-left: 11px;
+    // border: solid 1.8px #b3b3b3;
+    margin: -1px -2px;
+    border-radius: 5px;
+    background: #f2f2f2;
+
+  }
+  
+  .inputdate_ios:hover{
+    border-color: #2dd36f !important;
+    box-shadow: 0 0 3px #2dd36f !important;
+     ion-icon{
+      color: #2dd36f !important;
+    }
+    
+  }
+  
+  
+  .custom-divider {
+    overflow: hidden;
+  }
+    .custom-label_label1 {
+    animation: moveRightToLeft 9s linear infinite;
+  }  
+  .custom-label_label2 {
+    animation: moveRightToLeft 9s linear infinite;
+  }  
+  @keyframes moveRightToLeft {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  .input-con-sombra {
+    min-height: 50px;    
+    text-transform: uppercase;
+
+  }
+  .input-con-sombra_select {
+    min-height: 41px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2);
+    border-radius:3px;
+    text-transform: uppercase;
+    padding-top: 2px;
+    color: #c9c9c9;
+    font-size: inherit;
+  }
+  ::ng-deep ion-input .label-text{
+    color: #c9c9c9;
+  }
+
+
+  .input-con-sombra_select_ios {
+    min-height: 41px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2);
+    border-radius:3px;
+    text-transform: uppercase;
+    padding-top: 2px;
+    color: #c9c9c9;
+    font-size: inherit;
+  }
+  ::ng-deep ion-input .label-text{
+    color: #c9c9c9;
+  }
+
+.input-con-sombra2::placeholder {
+  color: lightgray; 
+}
+.input-con-sombra2:focus-within {
+  border-color: black;
+}
+.input-con-sombra2:focus-within::placeholder {
+  color: black;
+}
+
+.mi-ion-input {
+  --padding-start: 11px;
+  --padding-end: 11px;
+  --placeholder-color: transparent;
+   border-width: 1px;
+  border-radius: 8px;
+  background-color: #f2f2f2;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  text-align: center;
+  height: 48px;
+}
+
+.mi-ion-input.input-focused {
+  border-color: #2dd36f !important;
+  box-shadow: 0 0 3px #2dd36f !important;
+}
+
+
+
+ion-radio::part(container) {
+  width: 20px;
+  height: 20px;
+  border-radius: 14px;
+  border: 2px solid #ddd;
+}
+
+ion-radio::part(mark) {
+  background: none;
+  transition: none;
+  transform: none;
+  border-radius: 0;
+}
+
+ion-radio.radio-checked::part(container) {
+  background: #84c6ed;
+  border-color: transparent;
+}
+
+ion-radio.radio-checked::part(mark) {
+  width: 6px;
+  height: 10px;
+
+  border-width: 0px 2px 2px 0px;
+  border-style: solid;
+  border-color: #fff;
+
+  transform: rotate(45deg);
+}
+.titulo {
+  padding-top: 0px;
+  padding-left: 0px;
+  position: absolute;
+  bottom: 5px;
+  left: 3px;
+  
+  p {
+    padding-left: 5px;
+    font-size: small;
+    color: #7e7e7e;
+    margin-bottom: 0;
+  }
+  h2{
+    margin-top: 0;
+  }
+}
+// *ngIf="paciente.fec_nac===null"s

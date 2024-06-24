@@ -1,0 +1,772 @@
+<ion-content (click)="checkListaDesplegable($event)">
+
+
+  <ion-row>
+    <ion-col size="4" size-xs="12">
+      <div class="franja_usr">
+        <ion-icon name="person-circle-outline"></ion-icon> {{des_usr}}
+      </div>
+    </ion-col>
+
+
+  </ion-row>
+
+<!-- Verificar desde aquiiiiiiiiiii -->
+
+
+
+  <ion-row class="row_container">
+    <ion-col size-xs="12" size-sm="5" size-md="5" size-lg="5" size-xl="5">
+      <div class="scrollable-content">
+      <ion-card style="width: 100%;">
+        <ion-toolbar color="secondary" class="ion-text-center">Datos del Paciente
+          <ion-buttons *ngIf="!desactivar_segment_nombre_cedula" slot="end" class="ion-text-end" style="background: lightskyblue;margin-right: 1px;">
+            <ion-button fill="clear" size="small" color="light" (click)="presentModalNuevoPaciente()">
+              <ion-icon name="person-add-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-card-content style="padding-right: 10px;padding-right: 0px;padding-left: 0px;">
+          <ion-row *ngIf="!desactivar_segment_nombre_cedula">
+            <ion-col style="padding-bottom: 0px;padding-top: 0px;">
+              <ion-segment (ionChange)="segmentChanged($event)" value="cedula"
+                style="--color-checked: black; background: aliceblue;border-radius: 5px">
+                <ion-segment-button value="cedula" style="--color-checked: #0069a6;--background-checked: #dff2ff;">
+                  <ion-label>Buscar Cédula</ion-label>
+                </ion-segment-button>
+                <ion-segment-button (click)="abrirModalGetPaciente()" value="nombre"
+                  style="--color-checked: #0069a6;--background-checked: #dff2ff;">
+                  <ion-label>Buscar Nombre</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!desactivar_segment_nombre_cedula">
+            <ion-col size="12" style="padding-left: 0px;" class="ion-no-padding" *ngIf="selectedSegment === 'cedula'">
+              <ion-searchbar class="ion-no-padding ion-center-class search_class" 
+              show-clear-button="always" clear-icon="trash-bin"
+                placeholder="Buscar Cédula" [(ngModel)]="this.inputCedula" [disabled]="this.disabled_cedula"
+                [value]="this.inputCedula" (ionChange)="this.getPaciente()" (keyup.enter)="this.getPaciente()"
+                (ionFocus)="Test1('cedula')" style="color:gray"></ion-searchbar>
+            </ion-col>
+          </ion-row>
+          <ion-card-content class="ion-no-padding">
+            <ion-row *ngIf="paciente != null &&  paciente.cod_pac">
+              <ion-col size="12" class="ion-no-padding">
+                <ion-item #itemPac lines="none" *ngIf="paciente || paciente!=null">
+                  <ion-row class="full_width">
+                    <ion-col size="12" class="ion-text-center" style="padding-top: 0px;padding-bottom: 10px;">
+                      <ion-text style="font-weight: bold;overflow-x: auto;">
+                        {{paciente.nombre_completo}}
+                      </ion-text>
+                    </ion-col>
+                    <ion-col size="12" class="ion-justify-content-end">
+                      <ion-row style="margin-top: -16px;">
+                        <ion-col size="7" class="ion-text-start" style="padding-left: 0px;">
+                          <small>
+                            <ion-text color="primary" style="font-size: small;">
+                              <ion-icon name="id-card-outline"
+                                style="height: 20px;width: 20px;margin: 0px 0px -2px;"></ion-icon>
+                              {{ paciente.id_pac || '' }}
+                              <ion-badge *ngIf="!paciente.id_pac" color="danger" style="font-size: x-small;">Sin
+                                Identificación</ion-badge>
+                            </ion-text>
+                          </small>
+                        </ion-col>
+                        <ion-col size="5" class="ion-text-end">
+                          <small>
+                            <ion-text color="primary" style="font-size: small;">
+                              <ion-icon name="person-circle-outline"
+                                style="height: 20px;width: 20px;margin: 0px 0px -5px;"></ion-icon>
+                              ({{ paciente.cod_pac ?? 0 }})
+                            </ion-text>
+                          </small>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <small> <ion-icon name="mail-outline" style="height: 21px;width: 20px;margin: 0px 0px -7px 0px;"
+                            color="primary"></ion-icon> {{paciente.mail_pac}}
+                          <ion-badge *ngIf="!paciente.mail_pac" color="danger" style="font-size: x-small;">Sin
+                            Correo</ion-badge>
+                        </small>
+                      </ion-row>
+                      <ion-row class="ion-text-end">
+                        <small style="margin: 1px 0px;">
+                          <ion-icon style="height: 20px;width: 20px;margin: 0px 0px -4px;"
+                            ngClass="{{ paciente.sex_pac=='M' ? 'male-class' : 'female-class' }}"
+                            [name]="(paciente.sex_pac=='M')?'male-outline':(paciente.sex_pac=='F')?'female-outline':'male-female-outline'">
+                          </ion-icon>
+                          {{(paciente.sex_pac=='M')?'Masculino':(paciente.sex_pac=='F')?'Femenino':'No asignado'}}
+                        </small>
+                        <ion-badge *ngIf="!paciente.sex_pac" color="danger" style="font-size: x-small;">Sin
+                          Género</ion-badge>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col size="8" class="ion-text-start ion-no-padding"> 
+                          <small><ion-icon name="calendar-outline"
+                            style="height: 20px;width: 19px;margin: 1px 4px -4px 0px;color: #3880ff;"></ion-icon>{{paciente.fec_nac}}
+                          / {{paciente.edad}}</small>
+                        <ion-badge *ngIf="!paciente.fec_nac" color="danger" style="font-size: x-small;">Sin
+                          Fecha de nacimiento</ion-badge>
+                        </ion-col>
+                        <ion-col size="4" class="ion-text-end ion-no-padding" style="margin-top: -12px;">
+                          <!-- <ion-icon name="pencil" (click)="editAction()"></ion-icon> -->
+                           <ion-button *ngIf="!desactivar_segment_nombre_cedula" color="primary" size="small" (click)="presentModalNuevoPaciente(paciente.cod_pac)">
+                            
+                            <!-- <ion-button color="primary" fill="clear" size="small" (click)="editAction()"> -->
+                            <ion-icon name="pencil"></ion-icon>
+                           </ion-button>
+                        </ion-col>                       
+                      </ion-row>
+                    </ion-col>
+
+                  </ion-row>
+                </ion-item>
+                <div #referencia></div>
+              </ion-col>
+
+              <ion-accordion-group [multiple]="true" [value]="['first', 'second']" style="width: 100%;">
+                <ion-accordion value="first">
+                  <ion-item slot="header" color="light">
+                    <ion-label style="font-size: smaller;">Información Adicional</ion-label>
+                  </ion-item>
+                  <div class="ion-no-padding" slot="content">
+
+                    <ion-row>
+                      <ion-col size="12" *ngIf="this.diagnostico_config.enable"
+                        style="padding-top: 0px;padding-bottom: 0px;">
+                        <ion-label class="label_custom" position="stacked">{{ 'tags.diagnostic' | translate }}<ion-text
+                            *ngIf="this.diagnostico_config.required" color="danger">*</ion-text></ion-label>
+                            <ion-item *ngIf='diagnostico && !diagnostico.descripcion' class="item_custom2" lines="none"
+                            style="margin-top: 0px;margin-bottom: 0px;">
+                            <ion-icon color="primary" name="search" slot="end"></ion-icon>
+                            <ion-input type="text" [(ngModel)]="inputDiagnostico" [value]="inputDiagnostico"
+                              (Keyup.enter)="searchDiagnostico()" (ionFocus)="searchDiagnostico()"
+                              (ionInput)="searchDiagnostico()" debounce="500"></ion-input>
+                          </ion-item>
+                          <ion-item *ngIf='diagnostico && diagnostico.descripcion' class="item_custom2" lines="none"
+                          style="margin-top: 0px;margin-bottom: 0px;" [disabled]="desactivar_segment_nombre_cedula">
+                          <ion-icon color="danger" name="close" slot="end" (click)="eliminarDiagnostico()"></ion-icon>
+                          <ion-input type="text" value="{{diagnostico.descripcion}} - {{diagnostico.codigo}}"
+                            readonly="true"></ion-input>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col *ngIf="show_listaDiagnostico">
+                        <div class='{{this.mobile?"listadesplegable":"listadesplegable desplegablediagnostico1"}}'>
+                          <ion-grid class="here" *ngIf="ListDiagnostico.length>0">
+                            <ion-row *ngFor="let item of ListDiagnostico; let i =index" class="here"
+                              (click)="selectDiagnostico(item)">
+                              <ion-col size="10" class="here  ion-text-wrap">
+                                <ion-label class="here ">{{item.descripcion}}</ion-label>
+                              </ion-col>
+                              <ion-col size="2" class="here">
+                                <ion-label class="here">{{item.codigo}}</ion-label>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                          <ion-grid class="here" *ngIf="ListDiagnostico.length==0">
+                            <ion-row>
+                              <ion-col>No se encontraron resultados</ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </div>
+                      </ion-col>
+
+                      <ion-col size="12" *ngIf="this.diagnostico_extra_config.enable"
+                        style="padding-top: 0px;padding-bottom: 0px;">
+                        <ion-label class="label_custom" position="stacked">{{ 'tags.diagnostic' | translate }} extra
+                          <ion-text *ngIf="this.diagnostico_extra_config.required" color="danger">*</ion-text>
+                        </ion-label>
+         
+                        <ion-item *ngIf='diagnosticoextra && !diagnosticoextra.descripcion' class="item_custom2" lines="none"
+                          style="margin-top: 0px;margin-bottom: 0px;">
+                          <ion-icon color="primary" name="search" slot="end"></ion-icon>
+                          <ion-input type="text" [(ngModel)]="inputDiagnosticoextra" [value]="inputDiagnosticoextra"
+                            (Keyup.enter)="searchDiagnosticoextra()" (ionFocus)="searchDiagnosticoextra()"
+                            (ionInput)="searchDiagnosticoextra()" debounce="500"></ion-input>
+                        </ion-item>
+
+                        <ion-item *ngIf='diagnosticoextra && diagnosticoextra.descripcion' class="item_custom2" lines="none"
+                        style="margin-top: 0px;margin-bottom: 0px;" [disabled]="desactivar_segment_nombre_cedula">
+                        <ion-icon color="danger" name="close" slot="end"
+                          (click)="eliminarDiagnosticoextra()"></ion-icon>
+                        <ion-input type="text" value="{{diagnosticoextra.descripcion}} - {{diagnosticoextra.codigo}}"
+                          readonly="true"></ion-input>
+                      </ion-item>
+                      </ion-col>
+                      
+                      <!-- <ion-col> -->
+                        <div *ngIf="show_listaDiagnosticoextra"
+                          class='{{this.mobile?"listadesplegable":"listadesplegable desplegablediagnostico2"}}'>
+                          <ion-grid class="diagnostico" *ngIf="ListDiagnosticoextra.length>0">
+                            <ion-row *ngFor="let item of ListDiagnosticoextra; let i =index" class="diagnostico "
+                              (click)="selectDiagnosticoextra(item)">
+                              <ion-col size="10" class="diagnostico ion-text-wrap">
+                                <ion-label class="diagnostico ion-text-wrap">{{item.descripcion}}</ion-label>
+                              </ion-col>
+                              <ion-col size="2" class="diagnostico">
+                                <ion-label class="diagnostico">{{item.codigo}}</ion-label>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                          <ion-grid class="diagnostico" *ngIf="ListDiagnosticoextra.length==0">
+                            <ion-row>
+                              <ion-col>No se encontraron resultados</ion-col>
+                            </ion-row>
+                          </ion-grid>
+                        </div>
+                      <!-- </ion-col> -->
+
+                       <ion-row *ngIf="this.unidad_config.enable" style="width: 100%;">                  
+                          <ion-col size="12" style="padding-top: 0px;padding-bottom: 0px;"> 
+                            <ion-label class="label_custom" position="stacked">{{ 'tags.unity' | translate }} <ion-text *ngIf="this.unidad_config.required" color="danger">*</ion-text></ion-label>
+                            <ion-item *ngIf='!unidad.des_uni' class="item_custom2" lines="none" style="margin-top: 0px;">
+                              <ion-icon color="primary" name="search" slot="end"></ion-icon>
+                              <ion-input type="text" [(ngModel)]="inputUnidad" [value]="inputUnidad"
+                                (Keyup.enter)="searchUnidad()" (ionFocus)="searchUnidad()" (ionInput)="searchUnidad()"
+                                debounce="500"></ion-input>                               
+                            </ion-item>
+                      
+                            <ion-item *ngIf='unidad.des_uni' class="item_custom2" lines="none" [disabled]="desactivar_segment_nombre_cedula">
+                              <ion-icon color="danger" name="close" slot="end" (click)="eliminarUnidad()"></ion-icon>
+                              <ion-input type="text" value="{{unidad.des_uni}}" readonly="true"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                     
+                          <div *ngIf="show_listaUnidad" class='{{this.mobile?"listadesplegable ":"listadesplegable unidad listaunidad"}}'>
+                            <ion-grid *ngIf="listUnidad.length>0" class="unidadlist">
+                              <ion-row *ngFor="let item of listUnidad; let i =index" class="unidadlist"
+                                (click)="selectUnidad(item)">
+                                <ion-col size="12" class="unidadlist">
+                                  <ion-label class="unidadlist ">{{item.des_uni}}</ion-label>
+                                </ion-col>
+                              </ion-row>
+                            </ion-grid>
+                            <ion-grid class="unidadlist" *ngIf="listUnidad.length==0"> 
+                              <ion-row>
+                                <ion-col>No se encontraron resultados</ion-col>
+                              </ion-row>
+                            </ion-grid>
+                          </div>
+                        </ion-row>
+                      
+                          <ion-col *ngIf="!desactivar_segment_nombre_cedula" size="12" style="padding-top: 0px;padding-bottom: 0px;">
+                           <!-- <ion-item lines="none" class="ion-text-start"> -->
+                            <ion-button expand="block" size="2"  (click)="presentModalUnidad()">
+                              <ion-icon *ngIf="this.mobile" name="list"></ion-icon>
+                              <ion-icon *ngIf="!this.mobile" slot="start" name="list"></ion-icon>
+                              <ion-text  class="ion-text-wrap" *ngIf="!this.mobile">Listado</ion-text>
+                            </ion-button>
+                            <!-- </ion-item>  -->
+                          </ion-col>
+
+                    </ion-row>
+                  </div>
+                </ion-accordion>
+                <ion-accordion *ngIf="observaciones_pedido.enable" value="second">
+                  <ion-item slot="header" color="light">
+                    <ion-label style="font-size: smaller;">Obs./Info Clinica/Eferm</ion-label>
+                  </ion-item>
+                  <div class="ion-no-padding" slot="content" style="margin-top: -12px;">
+
+                    <ion-col *ngIf="observaciones_pedido.enable" size="12" style="margin-top: 0px;margin-bottom: 0px;">
+                      <!-- <ion-label class="label_custom" position="stacked">Obs./Info. Clínica/Enferm:</ion-label><ion-text
+                        *ngIf="this.observaciones_pedido.required" color="danger">*</ion-text> -->
+                      <ion-textarea class="item_custom" [(ngModel)]="this.inputObservacion"
+                        [value]="this.inputObservacion" cols="1" rows="1"
+                        style="margin-top: 0px;margin-bottom: 0px;"></ion-textarea>
+                    </ion-col>
+
+                    <ion-row style="margin-top: -22px">
+                      <ion-col *ngIf="!desactivar_segment_nombre_cedula" size="12" style="padding-right: 10px;padding-left: 10px;">
+                        <!-- <ion-label class="label_custom" position="stacked">{{ 'tags.status' | translate }}:</ion-label> -->
+                        <!-- <ion-segment color="primary" style="padding-right: 10px;padding-left: 10px;padding-top: 2px;padding-bottom: 2px;border-radius: 3pc;">
+                          <ion-segment-button value="1" style="background:#ff9fb1;">
+                              <ion-icon name="alarm"></ion-icon>
+                          </ion-segment-button>
+                          <ion-segment-button value="2" style="background:#bfdbbf;">
+                            <ion-icon name="bed"></ion-icon>
+                          </ion-segment-button>
+                          <ion-segment-button value="3" style="background:#eee3f1;">
+                            <ion-icon name="calendar-number-outline"></ion-icon>
+                          </ion-segment-button>
+                      </ion-segment> -->
+                      <ion-segment  color="primary" style="border-radius: 1pc;border: 1px solid #b0b0b0;" *ngIf="ListEstado" (ionChange)="changeEstado($event)">
+                        <ion-segment-button *ngFor="let item of ListEstado" [value]="item.codigo" [style.background]="item.color" [style.border]="item.borde">
+                            <ion-icon [name]="item.icono"></ion-icon>
+                            <!-- {{item.descripcion}} -->
+                        </ion-segment-button>
+                    </ion-segment>
+                    </ion-col>
+                               <!-- <ion-item class="item_custom2" lines="none">
+                          <ion-select interface="popover" *ngIf="ListEstado" [value]="estado.codigo"
+                            (ionChange)="changeEstado($event)">
+                            <ion-select-option *ngFor="let item of ListEstado"
+                              [value]="item.codigo">{{item.descripcion}}
+                            </ion-select-option>
+                          </ion-select>
+                        </ion-item> -->                                                 
+                      <ion-col size="12" style="padding-top: 7px;margin-top: -12px;">
+                          <ion-label class="label_custom" position="stacked">{{ 'tags.room_tag' | translate }}:</ion-label>
+                          <ion-item class="item_custom2" lines="none" style="margin-top: 0px;">
+                            <ion-input type="text" [(ngModel)]="this.inputHabitacion" [value]="this.inputHabitacion">
+                            </ion-input>
+                          </ion-item>                                    
+                      </ion-col>
+                    </ion-row>
+                  </div>
+                </ion-accordion>
+              </ion-accordion-group>
+
+
+            </ion-row>
+          </ion-card-content>
+        </ion-card-content>
+      </ion-card>
+      </div>      
+    </ion-col>
+
+
+ 
+    <ion-col size-xs="12" size-sm="7" size-md="7" size-lg="7" size-xl="7" style="padding-top: 0px;padding-bottom: 0px;">
+      <ion-card style="width: 97%;">
+        <ion-toolbar color="secondary" class="ion-text-center"> Información del Pedido</ion-toolbar>
+        <ion-card-content style="padding-bottom: 0px;">
+          <ion-row *ngIf="this.active_lugar_pedido">
+            <!-- <ion-col class="ion-text-start" size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+              <ion-label class="label_custom" position="stacked">{{ 'tags.place' | translate }}</ion-label>
+            </ion-col> -->
+            <!-- <ion-col class="ion-text-center ion-no-padding" style="padding-bottom: 0px"> -->
+              <ion-col [class.disabled]="desactivar_segment_nombre_cedula" class="ion-text-center ion-no-padding" style="padding-bottom: 0px">
+              <!-- border-left: 0.5px solid darkgrey; -->
+              <ion-segment class="segment_custom" [value]="lugar.codigo" (ionChange)="changelugar($event)" style="border-radius: 8px;">
+                <ion-segment-button *ngFor="let item of ListLugar" [value]="item.codigo" class="ion-text-wrap"
+                  [style]="(lugar.codigo==2)?'--background-checked:#d80000':(lugar.codigo==1)?'--background-checked:#5ccfae':(lugar.codigo==3)?'--background-checked:#7479ff':''"
+                  [hidden]="(item.enable?false:true)" [value]="item.codigo">
+                  {{item.descripcion}} </ion-segment-button>
+              </ion-segment>
+            </ion-col>
+
+          </ion-row>
+
+          <div *ngIf="flag_active_turno_config_json">
+            <ion-row *ngIf="flag_consulta_externa" class="ion_row_turnos">
+              <ion-col
+                class="ion_col_turnos_maximos ion-text-center ion-flex ion-align-items-center ion-justify-content-center"
+                size="6" size-xm="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+                <ion-label class="label1_col_turnos">TURNOS MAXIMO X/DIA:</ion-label><br>
+                <ion-label class="label2_col_turnos">{{this.nro_max_turnos}}</ion-label>
+              </ion-col>
+              <ion-col [ngClass]="{'red-background': flag_color_rojo_turno, 'ion_col_turnos_totales':true}"
+                class="ion_col_turnos_totales ion-text-center ion-flex ion-align-items-center ion-justify-content-center"
+                size="6" size-xm="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+                <ion-label [ngClass]="{'label6_col_turnos': flag_color_rojo_turno, 'label3_col_turnos':true}">TURNOS
+                  UTILIZADOS:</ion-label><br>
+                <ion-label
+                  [ngClass]="{'label5_col_turnos': flag_color_rojo_turno, 'label4_col_turnos':true}">{{cont_rest_tur === -1 ? cont_rest_tur : cont_rest_tur}}</ion-label>
+              </ion-col>
+            </ion-row>
+          </div>
+          <ion-row>
+            <ion-col *ngIf="!flag_ocultar_fecha" size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12"
+              size-xl="12" class="ion-no-padding" style="padding-bottom: 3px;">
+              <ion-label class="label_custom" position="stacked">{{ 'tags.exam_date' | translate }}:</ion-label>
+              <input class="inputdate" type="date" [(ngModel)]="this.inputFechaExamen" (ngModelChange)="checkTurno()"
+                [value]="inputFechaExamen" [min]="minDate" />
+              <ion-row class="row_fec_dis" *ngIf="this.list_fechas_disponibles.length>=0 && this.lugar.codigo==3">
+                <ion-col *ngFor="let item of this.list_fechas_disponibles" (click)="changeFechaManual(item)"
+                  [class]="(item.selected)?'selected':''">
+                  <ion-text>
+                    {{item.fecha | date:'dd'}} <br>
+                    {{item.fecha | date:'EEE '}}
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <ion-col *ngIf="flag_ocultar_fecha" size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 0;padding-bottom: 0;">
+              <ng-container *ngIf="variable_activar_fecha; else radioGroup">
+                <ion-row>
+                  <ion-col class="ion-text-center" size="12" size-md="6" size-lg="6" size-xl="6" style="padding-top: 0;padding-bottom: 0;">
+                <ion-badge color="tertiary" style="margin-top: 20px;">  <ion-label style="color: white;" position="stacked">{{ 'complex.hora_turno' | translate }}:</ion-label></ion-badge>
+               </ion-col>
+               <ion-col class="ion-text-center" size="12" size-md="6" size-lg="6" size-xl="6" style="padding-top: 0;padding-bottom: 0;">
+                <ion-badge color="light">  <label style="text-align: center;background-color: #f0f0f0;;font-size: 2pc;">{{this.turno_hora_pedido}}</label></ion-badge>  
+               </ion-col>
+              </ion-row>                                
+                <!-- <input class="inputdate" type="time" [(ngModel)]="turno_hora_pedido" disabled/> -->
+                            </ng-container>
+            
+              <ng-template #radioGroup>
+                <ion-radio-group color="dark" style="display: flex; flex-direction: row;" [(ngModel)]="opcion_fecha_turnos_eme">
+                  <ion-item style="flex: 1;" style="--background: #f0f8ff;width: 100%;border-radius: 6px;border: 0.5px solid lightblue;">
+                    <ion-label class="ion-text-center" style="--color: #62636b;margin-bottom: 0pc;"><ion-badge color="secondary" style="font-size: 12px;"> Hoy Dia:<p>{{ hoy | date:'dd/MM/yyyy' }}</ion-badge></ion-label>
+                    <ion-radio value="hoy" (click)="Escoger_Radio_Button_dia(hoy,'h')"></ion-radio>
+                  </ion-item>
+                  <ion-item style="flex: 1;" style="--background: #dff2ff;width: 100%;border-radius: 6px;border: 0.5px solid lightblue;">
+                    <ion-label class="ion-text-center" style="--color: #a4a6aa;margin-bottom: 0pc;"> <ion-badge color="primary" style="font-size: 12px;">Mañana:<p>{{manana | date:'dd/MM/yyyy'}}</ion-badge></ion-label>
+                    <ion-radio value="manana" (click)="Escoger_Radio_Button_dia(manana,'m')"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ng-template>
+            </ion-col>
+
+          
+            <ion-col *ngIf="this.enable_hora_turno" size="12" size-xm="12" size-sm="12" size-md="12" size-lg="4"
+              size-xl="4">
+              <ion-label class="label_custom" position="stacked">{{ 'complex.hora_turno' | translate }}:</ion-label>
+              <input class="inputdate" type="time" [(ngModel)]="this.hora_turno" (ngModelChange)="setTurnoHora()" />
+            </ion-col>
+
+
+            <ion-col *ngIf="list_ref.length>0 && refentrega_pedido.enable" size="12" size-xm="12" size-sm="12"
+              size-md="12" size-lg="4" size-xl="4">
+              <ion-label class="label_custom" position="stacked">Ref.Entrega:</ion-label>
+              <ion-item class="item_custom2">
+                <ion-select interface="popover" placeholder="Seleccione una" [value]="ref_ca1_ord"
+                  (ionChange)="updateRef($event)">
+                  <ion-select-option *ngFor="let item of this.list_ref" [value]="item.value">
+                    {{item.des}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <!-- <ion-col *ngIf="observaciones_pedido.enable" size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12"
+              size-xl="12">
+              <ion-label class="label_custom" position="stacked">Obs./Info. Clínica/Enferm:</ion-label><ion-text
+                *ngIf="this.observaciones_pedido.required" color="danger">*</ion-text>
+              <ion-textarea class="item_custom" [(ngModel)]="this.inputObservacion" [value]="this.inputObservacion"
+                cols="1" rows="1"></ion-textarea>
+            </ion-col> -->
+
+
+            <!-- <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">{{ 'tags.status' | translate }}:</ion-label>
+              <ion-item class="item_custom2" lines="none">
+
+                <ion-select interface="popover" *ngIf="ListEstado" [value]="estado.codigo"
+                  (ionChange)="changeEstado($event)">
+
+                  <ion-select-option *ngFor="let item of ListEstado" [value]="item.codigo">{{item.descripcion}}
+                  </ion-select-option>
+
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">{{ 'tags.room_tag' | translate }}:</ion-label>
+              <ion-item class="item_custom2" lines="none">
+                <ion-input type="text" [(ngModel)]="this.inputHabitacion" [value]="this.inputHabitacion">
+                </ion-input>
+              </ion-item>
+            </ion-col> -->
+
+          </ion-row>
+        </ion-card-content>      
+        
+  <ion-row>      
+    <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style=" padding-top: 0px;">                          
+          <ion-grid style="padding-top: 0px;">
+            <!-- <ion-row>
+                <ion-button (click)="presentModalPerfiles()">
+                  {{ 'tags.profiles' | translate }}
+                </ion-button>
+                <ion-button  (click)="presentModalPerfilesAva()">
+                  {{ 'tags.profiles' | translate }} General
+                </ion-button>
+             </ion-row> -->
+             
+             <ion-row style="padding-left: 12px;padding-right: 12px;padding-top: 3px;">
+              <ion-segment (ionChange)="segmentChanged1($event)" style="display: flex;">
+                  <ion-segment-button value="profiles" style="background: #3880ff;border-radius: 5px;flex: 1;color: white;--background-checked: white;--color-checked: #3880ff;">
+                      {{ 'tags.profiles' | translate }}
+                  </ion-segment-button>
+                  <ion-segment-button value="profilesGeneral" style="    border-radius: 5px;border: 1px solid #3880ff;flex: 1;color: #3880ff;--background-checked: 3880ff;--color-checked: white;">
+                      {{ 'tags.profiles' | translate }} General
+                  </ion-segment-button>
+              </ion-segment>
+          </ion-row>
+
+            <ion-row>
+              <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" style="padding-top: 0px;">
+                <ion-item class="item_custom2" lines="none">
+                  <ion-icon color="primary" name="search" slot="end" (click)="buscarAnalisis2()"></ion-icon>
+                  <ion-input type="text" placeholder="Análisis" (Keyup.enter)="buscarAnalisis2()"
+                    (ionFocus)="buscarAnalisis2()" (ionInput)="buscarAnalisis2()" debounce="500"
+                    [(ngModel)]="inputAnalisis"></ion-input>
+                </ion-item>
+              </ion-col>   
+            </ion-row>
+            <ion-row>
+              <div *ngIf="show_listaAnalisis" class='{{this.mobile?"listadesplegable":"listadesplegable listadesplegableanalisis"}}' >
+                <ion-grid class="analisislist" *ngIf="ListaAnalisisTemp.length>0">
+                  <ion-row *ngFor="let item of ListaAnalisisTemp; let i =index" class="analisislist">
+                    <ion-col (click)="addAnalisis(item)" size="12" class="analisislist">
+                      <ion-label class="analisislist">{{item.des_ana}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <ion-grid class="analisislist" *ngIf="ListaAnalisisTemp.length==0"> 
+                  <ion-row>
+                    <ion-col>No se encontraron resultados</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <ion-row>              
+              <ion-col  class="rowcustom" *ngFor="let item of ListaAnalisis; let i =index" size="12" size-xm="12" size-sm="6" size-md="6"
+    size-lg="6" size-xl="6" [ngClass]="['ion-col-' + getRowColor(i)]" style="width: 100%;">
+    <ion-row>
+        <ion-col size="1">
+            <ion-icon mode="ios" name="beaker"></ion-icon>
+        </ion-col>
+        <ion-col size="10">                    
+            <ion-label class="ion-text-wrap">{{item.des_ana}}<br><small> {{item.cod_ana}}</small></ion-label>
+        </ion-col>
+        <ion-col size="1">
+            <ion-icon class="icon_ana" color="danger" name="close" (click)="eliminarAnalisis(i,item)"></ion-icon>
+        </ion-col>
+    </ion-row>
+</ion-col>
+            </ion-row>
+          </ion-grid>         
+    </ion-col>
+
+
+  </ion-row>
+
+      </ion-card>    
+    </ion-col>
+
+  </ion-row>
+  
+  <!--  <ion-row class="row_container">
+ <ion-col size="12" size-xm="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+        <ion-card>
+          <ion-toolbar color="secondary" class="ion-text-center">Información Adicional</ion-toolbar>
+          <ion-card-content>
+            <ion-row *ngIf="this.unidad_config.enable">
+              <ion-col size="8" size-xm="8" size-sm="8" size-md="7" size-lg="8" size-xl="8" style="height: 100% !important;margin: auto;" class="ion-text-start"> 
+                <ion-label class="label_custom" position="stacked">{{ 'tags.unity' | translate }} <ion-text *ngIf="this.unidad_config.required" color="danger">*</ion-text></ion-label>
+                <ion-item *ngIf='!unidad.des_uni' class="item_custom2" lines="none">
+                  <ion-icon color="primary" name="search" slot="end"></ion-icon>
+                  <ion-input type="text" [(ngModel)]="inputUnidad" [value]="inputUnidad"
+                    (Keyup.enter)="searchUnidad()" (ionFocus)="searchUnidad()" (ionInput)="searchUnidad()"
+                    debounce="500"></ion-input>
+                   
+                </ion-item>
+
+                <ion-item *ngIf='unidad.des_uni' class="item_custom2" lines="none">
+                  <ion-icon color="danger" name="close" slot="end" (click)="eliminarUnidad()"></ion-icon>
+                  <ion-input type="text" value="{{unidad.des_uni}}" readonly="true"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="4" size-xm="4" size-sm="4" size-md="5" size-lg="4" size-xl="4"   style="margin: auto;" class="ion-text-end">
+                <ion-label class="label_custom" position="stacked">&nbsp;</ion-label>
+               <ion-item lines="none">
+                <ion-button size="2"  (click)="presentModalUnidad()"  >
+                  <ion-icon *ngIf="this.mobile" name="list"></ion-icon>
+                  <ion-icon *ngIf="!this.mobile" slot="start" name="list"></ion-icon>
+                  <ion-text  class="ion-text-wrap" *ngIf="!this.mobile">Listado</ion-text>
+                </ion-button>
+               </ion-item>
+              </ion-col>
+            </ion-row>
+           
+            <ion-row *ngIf="this.unidad_config.enable">
+              <div *ngIf="show_listaUnidad" class='{{this.mobile?"listadesplegable ":"listadesplegable unidad listaunidad"}}'>
+                <ion-grid *ngIf="listUnidad.length>0" class="unidadlist">
+                  <ion-row *ngFor="let item of listUnidad; let i =index" class="unidadlist"
+                    (click)="selectUnidad(item)">
+                    <ion-col size="12" class="unidadlist">
+                      <ion-label class="unidadlist ">{{item.des_uni}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <ion-grid class="unidadlist" *ngIf="listUnidad.length==0"> 
+                  <ion-row>
+                    <ion-col>No se encontraron resultados</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+
+            </ion-row>
+            <ion-row >
+              
+              <ion-col size="12" *ngIf="this.diagnostico_config.enable">
+                <ion-label class="label_custom" position="stacked">{{ 'tags.diagnostic' | translate }}<ion-text *ngIf="this.diagnostico_config.required" color="danger">*</ion-text></ion-label>
+                <ion-item *ngIf='!diagnostico.descripcion' class="item_custom2" lines="none">
+                  <ion-icon color="primary" name="search" slot="end"></ion-icon>
+                  <ion-input type="text" [(ngModel)]="inputDiagnostico" [value]="inputDiagnostico"
+                    (Keyup.enter)="searchDiagnostico()" (ionFocus)="searchDiagnostico()"
+                    (ionInput)="searchDiagnostico()" debounce="500"></ion-input>
+                </ion-item>
+
+                <ion-item *ngIf='diagnostico.descripcion' class="item_custom2" lines="none">
+                  <ion-icon color="danger" name="close" slot="end" (click)="eliminarDiagnostico()"></ion-icon>
+                  <ion-input type="text" value="{{diagnostico.descripcion}} - {{diagnostico.codigo}}" readonly="true"></ion-input>
+                </ion-item>
+                
+                
+              </ion-col>
+
+             <ion-col  *ngIf="show_listaDiagnostico">
+              <div class='{{this.mobile?"listadesplegable":"listadesplegable desplegablediagnostico1"}}' >
+                <ion-grid class="here"  *ngIf="ListDiagnostico.length>0">
+                  <ion-row *ngFor="let item of ListDiagnostico; let i =index" class="here"
+                    (click)="selectDiagnostico(item)">
+                    <ion-col size="10" class="here  ion-text-wrap">
+                      <ion-label class="here ">{{item.descripcion}}</ion-label>
+                    </ion-col>
+                    <ion-col size="2" class="here">
+                      <ion-label class="here">{{item.codigo}}</ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <ion-grid class="here" *ngIf="ListDiagnostico.length==0"> 
+                  <ion-row>
+                    <ion-col>No se encontraron resultados</ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+             </ion-col>
+
+              <ion-col size="12" *ngIf="this.diagnostico_extra_config.enable">
+                <ion-label class="label_custom" position="stacked">{{ 'tags.diagnostic' | translate }} extra <ion-text *ngIf="this.diagnostico_extra_config.required" color="danger">*</ion-text>
+                </ion-label>
+                <ion-item *ngIf='!diagnosticoextra.descripcion' class="item_custom2" lines="none">
+                  <ion-icon color="primary" name="search" slot="end"></ion-icon>
+                  <ion-input type="text" [(ngModel)]="inputDiagnosticoextra" [value]="inputDiagnosticoextra"
+                    (Keyup.enter)="searchDiagnosticoextra()" (ionFocus)="searchDiagnosticoextra()"
+                    (ionInput)="searchDiagnosticoextra()" debounce="500"></ion-input>
+                </ion-item>
+
+                <ion-item *ngIf='diagnosticoextra.descripcion' class="item_custom2" lines="none">
+                  <ion-icon color="danger" name="close" slot="end" (click)="eliminarDiagnosticoextra()"></ion-icon>
+                  <ion-input type="text" value="{{diagnosticoextra.descripcion}} - {{diagnosticoextra.codigo}}" readonly="true"></ion-input>
+                </ion-item>
+
+                
+              </ion-col>
+              <ion-col>
+                <div *ngIf="show_listaDiagnosticoextra" class='{{this.mobile?"listadesplegable":"listadesplegable desplegablediagnostico2"}}'>
+                  <ion-grid class="diagnostico" *ngIf="ListDiagnosticoextra.length>0">
+                    <ion-row *ngFor="let item of ListDiagnosticoextra; let i =index" class="diagnostico "
+                      (click)="selectDiagnosticoextra(item)">
+                      <ion-col size="10" class="diagnostico ion-text-wrap">
+                        <ion-label class="diagnostico ion-text-wrap">{{item.descripcion}}</ion-label>
+                      </ion-col>
+                      <ion-col size="2" class="diagnostico">
+                        <ion-label class="diagnostico">{{item.codigo}}</ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  <ion-grid class="diagnostico" *ngIf="ListDiagnosticoextra.length==0"> 
+                    <ion-row>
+                      <ion-col>No se encontraron resultados</ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </ion-col>
+            </ion-row>
+
+
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col> -->
+
+  <!-- ///// Aqui comienza  la parte de analisis-->
+
+  <!-- <ion-col size="12" size-xm="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+        <ion-card class="card_analisis" >
+            <ion-toolbar color="secondary" class="ion-text-center">{{ 'tags.analysis' | translate }}</ion-toolbar>
+        
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                  <ion-button (click)="presentModalPerfiles()">
+                    {{ 'tags.profiles' | translate }}
+                  </ion-button>
+                  <ion-button  (click)="presentModalPerfilesAva()">
+                    {{ 'tags.profiles' | translate }} General
+                  </ion-button>
+               </ion-row>
+              <ion-row>
+                <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="7.5" size-xl="7.5">
+                  <ion-item class="item_custom2" lines="none">
+                    <ion-icon color="primary" name="search" slot="end" (click)="buscarAnalisis2()"></ion-icon>
+                    <ion-input type="text" placeholder="Análisis" (Keyup.enter)="buscarAnalisis2()"
+                      (ionFocus)="buscarAnalisis2()" (ionInput)="buscarAnalisis2()" debounce="500"
+                      [(ngModel)]="inputAnalisis"></ion-input>
+                  </ion-item>
+                </ion-col>   
+              </ion-row>
+              <ion-row>
+                <div *ngIf="show_listaAnalisis" class='{{this.mobile?"listadesplegable":"listadesplegable listadesplegableanalisis"}}' >
+                  <ion-grid class="analisislist" *ngIf="ListaAnalisisTemp.length>0">
+                    <ion-row *ngFor="let item of ListaAnalisisTemp; let i =index" class="analisislist">
+                      <ion-col (click)="addAnalisis(item)" size="12" class="analisislist">
+                        <ion-label class="analisislist">{{item.des_ana}}</ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  <ion-grid class="analisislist" *ngIf="ListaAnalisisTemp.length==0"> 
+                    <ion-row>
+                      <ion-col>No se encontraron resultados</ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </ion-row>
+            </ion-grid>
+            <ion-grid>
+              <ion-row>
+                <ion-col  class="rowcustom" *ngFor="let item of ListaAnalisis; let i =index" size="12" size-xm="12" size-sm="6" size-md="6"
+                  size-lg="6" size-xl="6">
+                  <ion-row>
+                    <ion-col size="1">
+                      <ion-icon mode="ios" name="beaker"></ion-icon>
+                    </ion-col>
+                    <ion-col size="10">
+                      
+                      <ion-label class="ion-text-wrap">{{item.des_ana}}<br><small> {{item.cod_ana}}</small></ion-label>
+                    </ion-col>
+                    <ion-col size="1">
+                      <ion-icon class="icon_ana" color="danger" name="close" (click)="eliminarAnalisis(i)"></ion-icon>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+           </ion-card>
+      </ion-col>
+
+
+
+  </ion-row>
+   -->
+
+   <ion-fab *ngIf="!desactivar_segment_nombre_cedula" vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button [class]="!mobile?'fab_button_web':''" color="success" (click)="presentAlertGuardar()">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <ion-fab *ngIf="desactivar_segment_nombre_cedula" vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button [class]="!mobile?'fab_button_web':''" color="tertiary" (click)="presentAlertUpdate()">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [class]="!mobile?'fab_button_web':''" color="danger" (click)="LimpiarTodo()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<app-pie-pagina></app-pie-pagina>

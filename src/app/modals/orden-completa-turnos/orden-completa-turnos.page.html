@@ -1,0 +1,456 @@
+ <ion-header [translucent]="true">
+  <ion-toolbar>   
+        <ion-badge color="primary" ></ion-badge>
+         <ion-badge color="medium" style="margin: 0px 1px 0px 16px;font-size: 25px;">Ordenes / Turnos de Pacitentes :</ion-badge>
+      <!-- <ion-title size="small">Historial de:
+       </ion-title> -->
+       <ion-button color="danger" expand="full" (click)="btn_close()" class="btn_cerrar" shape='' size='small'>
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+  </ion-toolbar>
+
+
+  
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    
+  <ion-grid  [style.height.%]="heigth_grid" >
+    <ion-card color="light" style="border-bottom: 4px solid #e2e2e2; border-right: 4px solid #e2e2e2; ">
+      <ion-card-header style="padding-bottom: 0px;padding-top: 0px;padding-right: 0px;">
+          <ion-row>
+
+            <ion-col class="ion-text-center" size="1" size-xm="1" size-sm="1" size-md="1" size-lg="1" size-xl="1">        
+              <ion-card-subtitle>                
+                  <ion-icon name="man-outline" *ngIf="lista_resultados_pacientes?.sex_pac === 'M'"
+                   style="width: 4pc;height: 5pc;color: #84c6ed;"></ion-icon>
+                    <ion-icon *ngIf="lista_resultados_pacientes?.sex_pac === 'F'" name="woman-outline"
+                   style="width: 4pc;height: 5pc;color: pink;"></ion-icon>
+                  </ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="7" size-xm="7" size-sm="7" size-md="7" size-lg="7" size-xl="7">
+              <ion-card-title class="ion-text-center" style="font-size: large;font-family: cursive;font-style: italic;font-weight: 900;line-height: 4.5;">{{ lista_resultados_pacientes?.nombre_completo }}</ion-card-title>
+            </ion-col>
+                                          
+              <ion-col  size="3" size-xm="3" size-sm="3" size-md="3" size-lg="3" size-xl="3" style="line-height: 1.5;">
+                <ion-row class="ion-text-center">                  
+                    <ion-card-subtitle>
+                      <ion-icon name="calendar" class="icono-calendario"></ion-icon>
+                      <span  class="cursiva mano-escrita">{{ lista_resultados_pacientes?.fec_nac }}&nbsp;&nbsp;({{lista_resultados_pacientes?.edad}})</span>
+                    </ion-card-subtitle>                  
+                </ion-row>  
+                <ion-row>    
+                  <ion-card-subtitle>    
+                  <ion-icon name="id-card-outline" class="icono-color-azul"></ion-icon>        
+                    <span class="cursiva mano-escrita">{{ lista_resultados_pacientes?.id_pac }}</span>
+                </ion-card-subtitle>
+              </ion-row>                  
+            <ion-row>
+                <ion-card-subtitle>   
+                  <ion-icon name="mail-unread-outline" class="icono-color-azul"></ion-icon>                           
+                  <span class="cursiva mano-escrita_mail">{{ lista_resultados_pacientes?.mail_pac }}</span>
+                </ion-card-subtitle>
+              </ion-row>
+              <ion-row>                
+                  <ion-card-subtitle>  
+                    <ion-icon name="person-circle-outline" class="icono-color-azul"></ion-icon>                            
+                    <span class="cursiva mano-escrita">{{ this.cod_pac }}</span>
+                  </ion-card-subtitle>                
+                </ion-row>                               
+              </ion-col> 
+              <ion-col class="ion-no-padding" size="1" size-xm="1" size-sm="1" size-md="1" size-lg="1" size-xl="1">
+                <ion-button color="secondary" expand="full" (click)="btn_enviar_orden(lista_resultados_pacientes)" class="btn_nueva_orden" shape='' size='small'>
+                  <div style="display: flex; flex-direction: column;align-items: center;">
+                    <div style="font-size: 8px; color: #fff; margin-bottom: 10px;">Nueva Orden</div>                  
+                  <ion-icon  src="assets/icon/portapapeles2.svg" style="font-size: 2.5em; color: #fff;"></ion-icon>
+                </div>  
+                </ion-button>
+              </ion-col>
+   
+          </ion-row>       
+      </ion-card-header>    
+
+    </ion-card>
+     <ion-card style="height: 80%;overflow-y: auto;padding-right: 0px;padding-left: 3px;">
+      <ion-card-header style="padding-bottom: 5px;">
+        <ion-card-subtitle  color="medium">Ordenes</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content style="padding-bottom: 0px;padding-right: 0px;padding-top: 0px;padding-left: 0px;">
+        <ion-row>
+          <ion-col>
+             <ion-row> 
+               <ion-row class="fila_titulos" style="position: sticky; top: 0; z-index: 1;width: 100%;">
+              <ion-col class="fila_titulos">NRO ORDEN</ion-col>
+              <ion-col class="fila_titulos">ESTADO</ion-col>
+              <ion-col class="fila_titulos">PRECIO</ion-col>
+              <ion-col class="fila_titulos">NOMBRE MEDICO</ion-col>
+
+              <ion-col class="fila_titulos">VER</ion-col>
+            </ion-row>
+            
+          <ion-row *ngFor="let orden of list_orden; let i = index" [ngClass]="['ion-col-' + getRowColor(i)]" style="width: 100%;">                                
+
+              <ion-col style="top: 3px;">{{orden.nro_ord}}</ion-col>              
+              <ion-col style="padding-bottom: 0px;top: 3px;">                
+                  <ng-container [ngSwitch]="orden.sts_ord">
+                    <ng-container *ngSwitchCase="'SM'">
+                      <ion-badge color="tertiary">Sin Muestra</ion-badge>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'PE'">
+                      <ion-badge color="warning">Pendiente</ion-badge>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'RF'">
+                      <ion-badge color="dark">Derivado</ion-badge>
+                     </ng-container>
+                    <ng-container *ngSwitchCase="'RC'">
+                      <ion-badge color="danger">Rechazado</ion-badge>                                       
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'EP'">
+                      <ion-badge color="default">En Proceso</ion-badge>          
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'RE'">
+                      <ion-badge color="primary">Repetir</ion-badge>                              
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'CA'">
+                      <ion-badge color="primary">Calculado</ion-badge>          
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'IN'">
+                      <ion-badge color="success">Ingresado</ion-badge>          
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'CO'">
+                      <ion-badge color="success">Completo</ion-badge>                                
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'VA'">
+                      <ion-badge color="success">Validado</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'FI'">
+                      <ion-badge color="success">Firmado</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'MA'">
+                      <ion-badge color="light">SentMail</ion-badge>                                
+
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'FA'">
+                      <ion-badge color="light">SentFax</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'DI'">
+                      <ion-badge color="dark">Dictado</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'IV'">
+                      <ion-badge color="secondary">ImpresoV</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'IM'">
+                      <ion-badge color="secondary">Impreso</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'WW'">
+                      <ion-badge color="secondary">Rev.Web</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'EN'">
+                      <ion-badge color="success">Entregado</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchCase="'WA'">
+                      <ion-badge color="secondary">Rev.WA</ion-badge>                                
+                      </ng-container>
+                    <ng-container *ngSwitchDefault>{{ orden.sts_ord }}</ng-container>
+                  </ng-container>                                
+              </ion-col>                           
+            
+              <ion-col style="top: 3px;">{{ orden.pre_ord | currency:'USD':'symbol':'1.2-2' }}</ion-col>
+              <ion-col style="top: 3px;">{{ orden.nombre_medico}}</ion-col>
+
+              <ion-col>
+                <ion-icon name="eye-outline" style="font-size: 1.5em; color: #2297f3;" (click)="presentAlertSeleccionOrden(orden)"></ion-icon>                
+              </ion-col>            
+            </ion-row> 
+          </ion-row>               
+          </ion-col>      
+        </ion-row>
+      </ion-card-content>        
+    </ion-card>       
+  </ion-grid>  
+
+ <ion-grid *ngIf="!bandera_turnos_ordenes" style="height: 48%;">
+  <ion-card style="height: 93%;overflow-y: auto;padding-right: 0px;padding-left: 3px;">
+    <ion-card-header style="padding-bottom: 5px;">
+      <ion-card-subtitle color="medium">Turnos</ion-card-subtitle>
+    </ion-card-header>
+   <ion-card-content style="padding-bottom: 0px;padding-right: 0px;padding-top: 0px;padding-left: 0px;">
+     <ion-row>
+       <ion-col>
+          <ion-row> 
+           <ion-row class="fila_titulos_turnos" style="position: sticky; top: 0; z-index: 1;width: 100%;">
+           <ion-col class="fila_titulos_turnos">NRO</ion-col>
+           <ion-col class="fila_titulos_turnos">FECHA TURNO</ion-col>
+           <ion-col class="fila_titulos_turnos">HORA TURNO</ion-col>
+           <ion-col class="fila_titulos_turnos">NOTA TURNO</ion-col>
+           <ion-col class="fila_titulos_turnos">VER</ion-col>
+         </ion-row>
+         
+       <ion-row *ngFor="let turno of list_turnos; let i = index" [ngClass]="['ion-col-' + getRowColor_turnos(i)]" style="width: 100%;">                                
+               <ion-col style="top: 3px;">{{ i + 1 }}</ion-col> 
+           <ion-col style="top: 3px;">{{turno.fec_tur}}</ion-col>
+           <ion-col style="top: 3px;">{{turno.hora_tur}}</ion-col>                                           
+           <ion-col style="top: 3px;">
+            <ion-badge color="primary" style="font-size: 0.8em;">{{ turno.nota_tur }}</ion-badge>
+          </ion-col>           
+          <!-- <ion-col style="top: 3px;">
+             <ion-icon name="eye-outline" style="font-size: 1.5em; color: cornflowerblue;" (click)="presentAlertSeleccionOrden(turno)"></ion-icon>
+           </ion-col>             -->
+           <ion-col style="top: 3px;">
+            <ion-icon  src="assets/icon/portapapeles.svg" style="font-size: 1.5em; color: #2297f3;" (click)="presentAlertSeleccionOrden(turno)"></ion-icon>                
+          </ion-col> 
+         </ion-row> 
+        </ion-row>            
+       </ion-col>
+     </ion-row>
+   </ion-card-content>
+ </ion-card>   
+</ion-grid> 
+
+<!-- </ion-reorder-group> -->
+</ion-content>
+
+<!-- <ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of items; let index">
+     <ion-label>{{ item }}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content> -->
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- <ion-card>
+<ion-list style="width: 100%;">    
+    <ion-item >
+      <ion-row class="fila_titulos" style="position: sticky; top: 0; z-index: 1;width: 100%;">
+        <ion-col class="fila_titulos">NRO</ion-col>
+        <ion-col class="fila_titulos">NRO ORDEN</ion-col>
+        <ion-col class="fila_titulos">ESTADO</ion-col>
+        <ion-col class="fila_titulos">PRECIO</ion-col>
+        <ion-col class="fila_titulos">VER</ion-col>
+      </ion-row>
+    </ion-item>
+
+
+
+<div style="height: 240px; overflow-y: auto;">
+    <ion-item *ngFor="let orden of list_orden; let i = index" [ngClass]="['ion-col-' + getRowColor(i)]"> 
+      <ion-row style="width: 100%;">                                
+        <ion-col style="top: 3px;">{{ i + 1 }}</ion-col> 
+    <ion-col style="top: 3px;">{{orden.nro_ord}}</ion-col>              
+    <ion-col style="padding-bottom: 0px;top: 3px;">                
+        <ng-container [ngSwitch]="orden.sts_ord">
+          <ng-container *ngSwitchCase="'SM'">
+            <ion-badge color="tertiary">Sin Muestra</ion-badge>
+          </ng-container>
+          <ng-container *ngSwitchCase="'PE'">
+            <ion-badge color="warning">Pendiente</ion-badge>
+          </ng-container>
+          <ng-container *ngSwitchCase="'RF'">
+            <ion-badge color="dark">Derivado</ion-badge>
+           </ng-container>
+          <ng-container *ngSwitchCase="'RC'">
+            <ion-badge color="danger">Rechazado</ion-badge>                                       
+          </ng-container>
+          <ng-container *ngSwitchCase="'EP'">
+            <ion-badge color="default">En Proceso</ion-badge>          
+          </ng-container>
+          <ng-container *ngSwitchCase="'RE'">
+            <ion-badge color="primary">Repetir</ion-badge>                              
+          </ng-container>
+          <ng-container *ngSwitchCase="'CA'">
+            <ion-badge color="primary">Calculado</ion-badge>          
+            </ng-container>
+          <ng-container *ngSwitchCase="'IN'">
+            <ion-badge color="success">Ingresado</ion-badge>          
+            </ng-container>
+          <ng-container *ngSwitchCase="'CO'">
+            <ion-badge color="success">Completo</ion-badge>                                
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'VA'">
+            <ion-badge color="success">Validado</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'FI'">
+            <ion-badge color="success">Firmado</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'MA'">
+            <ion-badge color="light">SentMail</ion-badge>                                
+
+            </ng-container>
+          <ng-container *ngSwitchCase="'FA'">
+            <ion-badge color="light">SentFax</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'DI'">
+            <ion-badge color="dark">Dictado</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'IV'">
+            <ion-badge color="secondary">ImpresoV</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'IM'">
+            <ion-badge color="secondary">Impreso</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'WW'">
+            <ion-badge color="secondary">Rev.Web</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'EN'">
+            <ion-badge color="success">Entregado</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchCase="'WA'">
+            <ion-badge color="secondary">Rev.WA</ion-badge>                                
+            </ng-container>
+          <ng-container *ngSwitchDefault>{{ orden.sts_ord }}</ng-container>
+        </ng-container>                                
+    </ion-col>                           
+    <ion-col style="top: 3px;">{{ orden.pre_ord | currency:'USD':'symbol':'1.2-2' }}</ion-col>
+    <ion-col>
+      <ion-icon name="eye-outline" style="font-size: 1.5em; color: #2297f3;" (click)="presentAlertSeleccionOrden(orden)"></ion-icon>
+    </ion-col>            
+  </ion-row>       
+      </ion-item>
+  </div>
+
+  <div style="height: 240px; overflow-y: auto;">
+    <ion-item style="position: sticky; top: 0; z-index: 1; width: 100%;">
+      <ion-row class="fila_titulos_turnos">
+        <ion-col class="fila_titulos_turnos">FECHA TURNO</ion-col>
+        <ion-col class="fila_titulos_turnos">HORA TURNO</ion-col>
+        <ion-col class="fila_titulos_turnos">NOTA TURNO</ion-col>
+        <ion-col class="fila_titulos_turnos">ACCION</ion-col>
+      </ion-row>
+    </ion-item>
+  
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+      <ion-item *ngFor="let turno of list_turnos; let i = index">
+        <ion-row style="width: 100%;">
+          <ion-col class="ion-text-center" style="top: 3px;">{{turno.fec_tur}}</ion-col>
+          <ion-col class="ion-text-center" style="top: 3px;">{{turno.hora_tur}}</ion-col>
+          <ion-col class="ion-text-center" style="top: 3px;">
+            <ion-badge color="primary" style="font-size: 0.8em;">{{ turno.nota_tur }}</ion-badge>
+          </ion-col>
+          <ion-col style="display: flex; justify-content: center; align-items: center;">
+            <ion-reorder></ion-reorder>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-reorder-group>
+  </div>
+   -->
+
+<!-- 
+    <ion-item>
+      <ion-row class="fila_titulos_turnos" style="position: sticky; top: 0; z-index: 1; width: 100%;">
+        <ion-col class="fila_titulos_turnos">FECHA TURNO</ion-col>
+        <ion-col class="fila_titulos_turnos">HORA TURNO</ion-col>
+        <ion-col class="fila_titulos_turnos">NOTA TURNO</ion-col>
+        <ion-col class="fila_titulos_turnos">ACCION</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <div style="height: 240px;overflow-y: auto;">      
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+        
+      <ion-item *ngFor="let turno of list_turnos; let i = index">
+        <ion-row style="width: 100%;">
+          <ion-col class="ion-text-center" style="top: 3px;">{{turno.fec_tur}}</ion-col>
+          <ion-col class="ion-text-center" style="top: 3px;">{{turno.hora_tur}}</ion-col>
+          <ion-col class="ion-text-center" style="top: 3px;">
+            <ion-badge color="primary" style="font-size: 0.8em;">{{ turno.nota_tur }}</ion-badge>
+          </ion-col>
+          <ion-col style="display: flex; justify-content: center; align-items: center;">
+            <ion-reorder></ion-reorder>
+          </ion-col>
+        </ion-row>
+      </ion-item>        
+    </ion-reorder-group>
+  </div> -->
+  
+  <!-- <div style="height: 240px;overflow-y: auto;">
+    <ion-item>
+            <ion-row class="fila_titulos_turnos" style="position: sticky; top: 0; z-index: 1;width: 100%;">
+                     <ion-col class="fila_titulos_turnos">FECHA TURNO</ion-col>
+            <ion-col class="fila_titulos_turnos">HORA TURNO</ion-col>
+            <ion-col class="fila_titulos_turnos">NOTA TURNO</ion-col>
+            <ion-col class="fila_titulos_turnos">VER</ion-col>
+          </ion-row>            
+    </ion-item>
+
+  
+  <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+    <ion-item *ngFor="let turno of list_turnos; let i = index">
+      <ion-row style="width: 100%;">     
+    <ion-col style="top: 3px;">{{turno.fec_tur}}</ion-col>
+    <ion-col style="top: 3px;">{{turno.hora_tur}}</ion-col>                                           
+    <ion-col style="top: 3px;">
+     <ion-badge color="primary" style="font-size: 0.8em;">{{ turno.nota_tur }}</ion-badge>
+   </ion-col>           
+   <ion-col><ion-reorder></ion-reorder></ion-col>
+      
+  </ion-row>           
+    </ion-item>
+  </ion-reorder-group>
+  </div>     -->
+<!-- </ion-list>
+</ion-card> -->
+  <!-- <ion-reorder-group [disabled]="false"> -->
+
+
+
+    <!-- <ion-card color="light"> 
+      <ion-card-header>
+        <ion-card-title class="ion-text-center" style="font-size: x-large;font-family: cursive;font-style: italic;font-weight: 900;">{{ lista_resultados_pacientes?.nombre_completo }}</ion-card-title>
+        <ion-grid style="width: 100%;">
+      <ion-row>
+         <ion-col class="ion-text-center" size="2" size-xm="2" size-sm="2" size-md="2" size-lg="2" size-xl="2">        
+          <ion-card-subtitle>                
+              <ion-icon name="man-outline" *ngIf="lista_resultados_pacientes?.sex_pac === 'M'"
+               style="width: 33px;height: 36px;color: #84c6ed;"></ion-icon>
+              <ion-icon *ngIf="lista_resultados_pacientes?.sex_pac === 'F'" name="woman-outline"
+               style="width: 33px;height: 36px;color: pink;"></ion-icon>
+              </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="10" size-xm="10" size-sm="10" size-md="10" size-lg="10" size-xl="10">
+          <ion-row>
+            <ion-col class="ion-text-center">
+              <ion-card-subtitle>
+                <ion-icon name="calendar" class="icono-calendario"></ion-icon>
+                <span class="cursiva mano-escrita">Fecha de Nacimiento: {{ lista_resultados_pacientes?.fec_nac }}&nbsp;&nbsp;({{lista_resultados_pacientes?.edad}})</span>
+              </ion-card-subtitle>
+            </ion-col>        
+          </ion-row>
+          <ion-row style="width: 100%;">
+       
+            <ion-col class="ion-text-start">
+              <ion-card-subtitle>    
+                <ion-icon name="id-card-outline" class="icono-calendario"></ion-icon>        
+                  <span class="cursiva mano-escrita">{{ lista_resultados_pacientes?.id_pac }}</span>
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col class="ion-text-start">
+              <ion-card-subtitle>   
+                <ion-icon name="mail-unread-outline" class="icono-calendario"></ion-icon>                           
+                <span class="cursiva mano-escrita">{{ lista_resultados_pacientes?.mail_pac }}</span>
+              </ion-card-subtitle>
+            </ion-col>              
+              <ion-col class="ion-text-end">
+                <ion-card-subtitle>  
+                  <ion-icon name="person-circle-outline"></ion-icon>                            
+                  <span class="cursiva mano-escrita">{{ this.cod_pac }}</span>
+                </ion-card-subtitle>
+              </ion-col>                     
+          </ion-row>
+        </ion-col>
+        </ion-row>
+        </ion-grid>                      
+    </ion-card-header>    
+
+  </ion-card> -->

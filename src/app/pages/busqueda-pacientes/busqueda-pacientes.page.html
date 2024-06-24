@@ -1,0 +1,467 @@
+<ion-content class="contenido-estatico">
+  <div class="franja_usr" style="height: 33px;">
+    <ion-icon name="person-circle-outline" *ngIf="tipo_user=='pat'"></ion-icon>
+    <ion-icon src="assets/icon/doctor3.svg" *ngIf="tipo_user=='med'"></ion-icon>
+    <ion-icon name="business" *ngIf="tipo_user=='ref'"></ion-icon>
+    <!-- {{des_usr}} -->
+    Listado de Usuarios
+  </div>
+  <ion-card style="height: 95%;">
+    <ion-card-header>
+
+      <ion-row class="fechas">
+        
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Nombres</ion-label>
+        
+          <div class="search-input">            
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: nombre' " [(ngModel)]="nombre_paciente"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="1000"
+              (ionInput)="buscarPaciente()">
+            </ion-searchbar>
+          </div>
+          
+          <small class="info-search" *ngIf="nombre_paciente!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Apellidos</ion-label>
+          <div class="search-input">            
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: apellido' " [(ngModel)]="apellido_paciente"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="1000"
+              (ionInput)="buscarPaciente()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="apellido_paciente!=''&&apellido_paciente.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+
+    
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Cédula</ion-label>
+          <div class="search-input">
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: cédula' " [(ngModel)]="cedula_paciente"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="1000"
+              (ionInput)="buscarPaciente()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="cedula_paciente!=''&&cedula_paciente.length<11">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+      </ion-row>
+
+
+     
+    </ion-card-header>
+
+    <ion-card-content style="height: 19pc; padding-top: 0px;">
+
+         <ion-list class="scroll-container" style="padding-right: 23px;">   
+     
+          <ng-container *ngIf="resultadosFiltrados.length > 15; else resultadosEncontrados">           
+            <div>
+              <ion-list *ngIf="!loaded">
+                <ion-list-header>
+                  <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+                </ion-list-header>
+                <ion-item>
+                  <ion-thumbnail slot="start">
+                    <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                  </ion-thumbnail>
+                  <ion-label>
+                    <h3>
+                      <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+                    </h3>
+                    <p>
+                      <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+                    </p>
+                    <p>
+                      <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+                    </p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+                                      
+                <ion-card class="clase_ion-card"> 
+                  <ion-card-header>
+                    <ion-card-title class="clase_ion-card-title">Los resultados encontrados mediante tu búsqueda son: {{resultadosFiltrados.length}} coincidencias.</ion-card-title>                  
+                  </ion-card-header> 
+                </ion-card>                                             
+            </div>
+
+          </ng-container>
+          
+          <ng-template #resultadosEncontrados>
+            <ion-item *ngFor="let paciente of resultadosFiltrados; let index = index;"
+        (click)="seleccionarItem(index)" 
+        class="row_datail_result" 
+        [ngClass]="{ 'focused': index === focusedIndex }" 
+        [tabindex]="index + 1">
+
+        <div class="indice" [slot]="mobile?'':'start'">
+          {{index+1}}
+        </div>
+           <ion-text>        
+            <ion-row class="ion-text-left nombres_orden">
+                <ion-col  [size]="mobile?12:''">                                  
+                  <div>
+                      <ion-icon *ngIf="paciente.sex_pac === 'M'" src="assets/icon/signo_hombre.svg" alt="Hombre" style="height: 85px; width: 30px; margin: -32px 0px -50px 1px;"></ion-icon>
+                      <ion-icon *ngIf="paciente.sex_pac === 'F'" src="assets/icon/mujer_icono.svg" alt="Mujer" style="height: 84px; width: 33px; margin: -32px 0px -50px 1px;"></ion-icon>
+                      <ion-icon *ngIf="paciente.sex_pac === null" src="assets/icon/men_girl.svg" style="height: 84px; width: 33px; margin: -32px 0px -50px 1px;"></ion-icon>
+                      
+                      <span style="margin: 3%;">{{ paciente.nombre_completo }}</span>
+                    </div>                                      
+              </ion-col>                          
+            </ion-row>
+
+            <ion-row class="orden_values">
+              <ion-col class="val_fecha" [size]="mobile?12:''" style="margin: -6px 9% -8px;">              
+               <span style="color:#7fa5c0; font-size: 14px; margin: 0px -6px 1px 1px;"><ion-icon slot="end" name="calendar-outline" style="height: 22px;width: 28px;"></ion-icon></span>
+               {{paciente.fec_nac}} &nbsp;({{paciente.edad}})
+              </ion-col>
+
+              <!-- <ion-col class="val_fecha" [size]="mobile?12:''" style="margin: -7px -20% -14px -39%">
+                <p><span style="color:#7fa5c0; font-size: 14px;">Edad:</span></p>
+                {{paciente.edad}}
+              </ion-col> -->
+
+              
+              <ion-col class="val_cedula" [size]="mobile?12:''" style="margin: -7px -15% -7px -20%;">
+                <span style="color:#7fa5c0; font-size: 14px; margin:-2px -5px -8px 3px"><ion-icon slot="end" src="assets/icon/id_card_person.svg" style="height: 22px;width: 28px;"></ion-icon></span>                                
+                ({{paciente.id_pac}})
+              </ion-col>
+
+               <ion-col [size]="mobile?12:''" style="margin:-38px -56% -8px -21%;" >
+                <ion-button style="place-self: center;" color="primary"><ion-icon slot="end" name="eye-outline" style="margin: 3px;"></ion-icon></ion-button>
+                <ion-button style="place-self: center;" color="success"><ion-icon slot="end" name="clipboard-outline" style="margin: 3px;"></ion-icon>Historial</ion-button>                                                                           
+              </ion-col>              
+             </ion-row>
+
+          </ion-text>             
+        </ion-item>         
+
+        <ion-card *ngIf="resultadosFiltrados.length === 0;" class="clase_ion-card"> 
+          <ion-card-header>
+            <ion-card-title class="clase_ion-card-title">Los resultados encontrados mediante tu búsqueda son: 0 coincidencias.</ion-card-title>                  
+          </ion-card-header>
+        </ion-card>
+          </ng-template>
+
+      </ion-list>
+     </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!-- --------------------------------------------------------------------------------------------------------*----------------------------------------------------------------------------------------------------------------------
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+<ion-content class="contenido-estatico">
+  <div class="franja_primer_conteiner" >
+    <ion-button color="success" expand="full" class="card_cod_pac" shape='' size='small'>
+      Cod Pac: {{input_cod_pac}}
+     </ion-button>
+  </div>
+
+
+  <ion-card  style="height: 95%; ">
+    <ion-card-header style="height: 25pc; padding-top: 5px;">
+
+
+      <ion-accordion-group style="margin: 3px -17px;" (ionChange)="accordionGroupChange($event)" [value]="['first']">
+        <ion-accordion value="first">   
+            <ion-item slot="header" color="light">
+              <ion-label class="white-text">Formulario de Ingreso Pacientes</ion-label>
+            </ion-item>
+            <div style="padding-top: 10px;padding-left: 16px;padding-right: 16px;padding-bottom: 10px;" slot="content">         
+      <ion-row>
+          <ion-col [size]="mobile?'12':'4'">
+<ion-input class="input-con-sombra" label="Nombres" label-placement="floating" fill="outline" placeholder="'Ingreso de nombre'" [(ngModel)]="input_nombre">
+            </ion-input>
+        </ion-col>
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-input class="input-con-sombra" label="Apellidos" label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [placeholder]="'Ingreso de apellido' " [(ngModel)]="input_apellido">
+          </ion-input>
+        </ion-col>
+        <ion-col [size]="mobile?'12':'4'">
+          
+            <ion-input class="input-con-sombra"  label="Cédula" label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [placeholder]="'Ingreso de cédula'" type="text" [value]="input_id" [(ngModel)]="input_id" (keyup)="onDateKeyCedula($event)"  [attr.max]="getValidarcedula()"></ion-input>
+        
+          <ion-label *ngIf="esCedulaValidaennumero === -1" position="stacked" 
+          class="item_custom cedula-no-existe"
+          [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px; font-size: 11px;">[N/A]</ion-label>
+
+          <ion-label *ngIf="esCedulaValidaennumero === 0" position="stacked" 
+         class="item_custom cedula-valida-verde"
+         [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Cedula Correcta</ion-label>
+
+        <ion-label *ngIf="esCedulaValidaennumero === 1" position="stacked" 
+         class="item_custom cedula-invalida-rojo"
+         [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Cedula Incorrecta</ion-label>
+         
+         <ion-label *ngIf="esCedulaValidaennumero === 2" position="stacked" 
+         class="item_custom pasaporte-valida-verde"
+         [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Pasaporte</ion-label>
+         
+         <ion-label *ngIf="esCedulaValidaennumero === 3" position="stacked" 
+         class="item_custom pasaporte-invalida-rojo"
+         [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Pasaporte</ion-label>
+
+         <ion-label *ngIf="esCedulaValidaennumero === 4" position="stacked" 
+         class="item_custom ruc-valida-verde"
+         [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Ruc</ion-label>
+
+        <ion-label *ngIf="esCedulaValidaennumero === 5" position="stacked" 
+         class="item_custom ruc-valida-verde"
+         [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Ruc</ion-label>  
+
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row class="fechas">
+  
+        <ion-col [size]="mobile?'12':'4'">          
+      <input class="inputdate" type="date" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="input_fec_nac" (keyup)="onDateKeyUp($event, input_fec_nac)"/>
+          </ion-col>        
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-input class="input-con-sombra" label="Edad" label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [placeholder]="'Edad' " [(ngModel)]="input_edad" [value]="input_edad" readonly>
+          </ion-input>
+        </ion-col>
+
+        <ion-col [size]="mobile?'12':'4'" style="padding-top: 0px; padding-bottom: 0px;">
+    
+          <ion-radio-group  [(ngModel)]="input_genero" value="M">
+            <ion-row>              
+              <ion-col size="12" size-xm="12" size-sm="12" size-md="6" size-lg="6" size-xl="6" style="padding-top: 0px;padding-bottom: 0px;">
+                <ion-item  lines="none" class="item-azul">
+                  <ion-label  class="item-azul">M</ion-label>
+                  <ion-icon name="man-outline" style="color: #84c6ed;"></ion-icon>
+                  <ion-radio slot="start" value="M"  class="item-azul"></ion-radio>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-xm="12" size-sm="12" size-md="6" size-lg="6" size-xl="6" style="padding-top: 0px;padding-bottom: 0px;">
+                <ion-item  lines="none" class="item-rosado">
+                  <ion-label class="item-rosado">F</ion-label> 
+                  <ion-icon name="woman-outline" style="color: pink;"></ion-icon>
+                  <ion-radio slot="start" value="F" class="radio-rosado"></ion-radio>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group>
+
+        </ion-col>    
+
+      </ion-row>
+
+      <ion-row>
+  
+        <ion-col [size]="mobile?'12':'12'">
+          <ion-input class="input-con-sombra" label="Correo"   [placeholder]="'Ingresa Email' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [placeholder]="'Email' " [(ngModel)]="input_mail">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="fechas">
+  
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-input class="input-con-sombra" label="Teléfono"   [placeholder]="'Ingresa Teléfono' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile"  [(ngModel)]="input_telefono">
+          </ion-input>
+        </ion-col>
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-input class="input-con-sombra" label="Celular"   [placeholder]="'Ingresa Celular' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="input_celular">
+          </ion-input>
+        </ion-col>
+
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-input class="input-con-sombra" label="Código Postal"   [placeholder]="'Ingresa Código Postal' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="this.input_cp">
+          </ion-input>
+        </ion-col>
+
+      </ion-row>
+      </div>
+    </ion-accordion>
+
+        <ion-accordion value="second">
+       <ion-item slot="header" color="light" class="custom-header">
+         <ion-label class="white-text">Información Personal</ion-label>
+       </ion-item>
+       <!-- <div class="ion-padding" slot="content" style="height: 117px;overflow-y: scroll; "> -->
+        <div style="padding-top: 5px;padding-left: 16px;padding-right: 16px;padding-bottom: 16px;" slot="content">
+         <ion-row>
+          <ion-col [size]="mobile?'12':'6'">
+             <ion-list style="padding-right: 0px;padding-bottom: 0px;padding-left: 0px;border-radius: 3px;">
+                 <ion-select class=" input-con-sombra_select"  [placeholder]="'Pais de Población'"  interface="popover" toggleIcon="add" expandedIcon="remove" [(ngModel)]="this.input_pob" style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);padding-bottom: 16px;"> 
+                     <ion-select-option *ngFor="let poblacion of array_poblacion" [value]="poblacion.cod_pob">
+                       {{ poblacion.cod_pob }} - {{ poblacion.cod_niv === 1 ? 'Provincia' : 'Ciudad' }} - {{ poblacion.des_pob }}
+                     </ion-select-option>                    
+                 </ion-select>
+             </ion-list>
+           </ion-col>
+
+          
+           <ion-col [size]="mobile?'12':'6'">
+            <ion-input class="input-con-sombra" label="Dirección"  [value]="this.input_direccion"  [placeholder]="'Ingresa Dirección' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="input_direccion">
+            </ion-input>
+          </ion-col>
+
+
+         </ion-row>
+
+
+   <ion-item-divider class="custom-divider">
+     <ion-label class="custom-label_label1">LUGAR DE NACIMIENTO</ion-label> 
+   </ion-item-divider>
+   
+           <ion-row>             
+      <ion-col [size]="mobile?'12':'6'">
+        <ion-list style="padding-right: 0px;
+        padding-bottom: 0px;
+        padding-left: 0px; border-radius: 3px;">
+            <ion-select class="input-con-sombra_select" [placeholder]="'Pais de Origen'" [(ngModel)]="this.input_pais_origen" style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);">                                 
+                      <ion-select-option value="ECU">Ecuador</ion-select-option>                      
+            </ion-select>
+        </ion-list>
+      </ion-col>
+          
+       
+           <ion-col [size]="mobile?'12':'6'">
+            <ion-input class="input-con-sombra" label="Ciudad"  [value]="this.input_ciudad"  [placeholder]="'Ingresa la Ciudad' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="this.input_ciudad">
+            </ion-input>
+          </ion-col>
+
+
+          </ion-row>
+      
+       <ion-item-divider class="custom-divider">
+         <ion-label class="custom-label_label2">ESTADO</ion-label> 
+         </ion-item-divider>
+
+          <ion-row>                   
+
+
+
+           <ion-col [size]="mobile?'12':'6'">
+            <ion-list style="padding-right: 0px;padding-bottom: 0px;padding-left: 0px; border-radius: 3px;">
+                <ion-select class="input-con-sombra" [placeholder]="'Referencia'" [(ngModel)]="this.input_referencia" style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);">               
+                          <ion-select-option *ngFor="let referencia of array_referencia" [value]="referencia.cod_ref">{{referencia.cod_ref }} - {{referencia.des_ref}}</ion-select-option>
+                </ion-select>
+             </ion-list>
+          </ion-col>
+               
+          <ion-col [size]="mobile?'12':'6'">
+                <ion-select class="input-con-sombra" [placeholder]="'Estado Civil'" [(ngModel)]="this.input_estadoCivil" style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);"> 
+                    <ion-select-option>Soltero</ion-select-option>
+                    <ion-select-option>Casado</ion-select-option>
+                    <ion-select-option>Divorciado</ion-select-option>
+                    <ion-select-option>Viudo</ion-select-option>
+                    <ion-select-option>Union Libre</ion-select-option>  
+                </ion-select>
+          </ion-col>
+         </ion-row>    
+       <ion-row>
+        
+        <ion-col [size]="mobile?'12':'6'">
+          <!-- <ion-list> -->
+              <ion-select [placeholder]="'Instrucción'" class="input-con-sombra" [(ngModel)]="this.input_instruccion" style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);">   
+                  <ion-select-option>Otro</ion-select-option>
+                  <ion-select-option>Primaria</ion-select-option>
+                  <ion-select-option>Secundaria</ion-select-option>
+                  <ion-select-option>Superior</ion-select-option>  
+              </ion-select>
+          
+        </ion-col>
+           <ion-col [size]="mobile?'12':'6'">
+            <ion-input class="input-con-sombra" label="Ocupación"  [value]="this.input_ocupacion"  [placeholder]="'Ingresa la Ocupación' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="this.input_ocupacion">
+            </ion-input>
+          </ion-col>
+         </ion-row>  
+       </div>     
+     </ion-accordion>
+
+     <ion-accordion value="third">
+       <ion-item slot="header" color="light">
+         <ion-label class="white-text">Observación</ion-label>
+       </ion-item>
+       <div style="padding-top: 16px;padding-left: 16px;padding-right: 16px;" slot="content">         
+         <ion-row>                          
+           <ion-col [size]="mobile?'12':'5'">
+            <ion-input class="input-con-sombra" label="Etnia/Raza:"  [value]="this.input_etnia"  [placeholder]="'Ingresa la Etnia/Raza'" label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="this.input_etnia">
+            </ion-input>
+          </ion-col>
+
+               
+           <ion-col [size]="mobile?'12':'5'">
+                <ion-select [placeholder]="'Información Crediticia'" class="input-con-sombra" [(ngModel)]="this.input_info_crediticia" style="height: 12px;border: 0.01px solid rgba(0, 0, 0, 0.2);"> 
+                    <ion-select-option>[Ninguna]</ion-select-option>
+                    <ion-select-option>Cobrar Siempre</ion-select-option>
+                    <ion-select-option>Cortesia (No Cobrar)</ion-select-option>                       
+                </ion-select>  
+          </ion-col>
+  
+           <ion-col [size]="mobile?'12':'2'">
+            <ion-input class="input-con-sombra" label="Tipo de Sangre"  [value]="this.input_tipo_sangre"  [placeholder]="'Ingresa el Tipo de Sangre' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="this.input_tipo_sangre">
+            </ion-input>
+          </ion-col>
+         </ion-row>
+     
+           <ion-row>
+           <ion-col [size]="mobile?'12':'12'">
+            <ion-textarea class="input-con-sombra" label="Patologias del Paciente"  [value]="this.input_patol_pac"  [placeholder]="'Ingresa las Patologias del Paciente' "label-placement="floating" fill="outline" *ngIf="filtro||!mobile" [(ngModel)]="this.input_patol_pac">
+            </ion-textarea>
+          </ion-col>
+          
+          </ion-row>           
+       </div>
+     </ion-accordion>
+
+   </ion-accordion-group>   
+
+   
+    </ion-card-header>
+    <ion-footer>
+      <ion-row>
+      
+<!-- 
+        <ion-col class="ion-text-end">       
+    
+          <ion-button  color="secondary" fill="outline" size="small">
+            <ion-icon slot="end" name="refresh-outline"></ion-icon>
+            Reset
+          </ion-button>
+          
+          <ion-button color="primary"  size="small" (click)="buscarMedico()">
+            <ion-icon slot="end" name="search-outline"></ion-icon>
+            Buscar
+          </ion-button>
+        </ion-col> -->
+      
+
+
+
+        <ion-col [size]="mobile ? '6' : '6'">
+          <ion-button *ngIf="bandera_de_botones; else crearPacienteButton" (click)="actualizarPaciente(this.input_cod_pac)" color="success" fill="outline" color="success" style="width: 100%; background: #f4fcf3;" ><ion-icon  slot="end" name="sync-outline"></ion-icon>Actualizar</ion-button>
+          <ng-template #crearPacienteButton>
+
+            
+            <ion-button (click)="CheckPaciente()" fill="outline" color="danger" style="width: 100%; background: aliceblue;" color="primary"><ion-icon  slot="end" name="person-add-outline"></ion-icon>Guardar</ion-button>
+            
+          </ng-template>
+        </ion-col>
+        
+        
+        <ion-col [size]="mobile ? '6' : '6'">
+          <ion-button (click)="presentAlertLimpiarDatos()" fill="outline" color="danger" style="width: 100%; background: lavenderblush;"><ion-icon slot="end" name="reload-outline"></ion-icon>Reset</ion-button>
+        </ion-col>
+        
+
+          </ion-row>
+    </ion-footer>
+    
+
+  </ion-card> 
+
+</ion-content>

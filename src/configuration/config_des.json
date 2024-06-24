@@ -1,0 +1,191 @@
+{
+    "tipoSystem":"",
+    "apiBaseType":1,
+    "versionApp":"misAnalisisOnlineDesa",
+    
+    "apiBaseHttps":false,
+    
+    "apiBaseUrl": "",
+    "apiBasePuerto":9080,
+    "apiBaseSubDir":"cs-common-intra",
+    "apiBasePuertoSsl":"",
+     
+    "apiIntranetSubDir":"cs-common-intra",
+    
+    "apiPdfMailUrl": "",
+    "apiPdfMailPuerto":9080,
+    "apiPdfMailSubDir":"common-pdf-generator",
+
+    "apiGraphQL":"",
+    "apiGraphQLPuerto":8180,
+    "apiGraphQLPuertoSsl":"",
+    "apiGraphQLSubDir":"graphql",
+
+    "activaVersionamiento":false,
+    "apiMongo":"",
+    "apiMongoPuerto":9280,
+    "apiMongoPuertoSsl":"",
+    "apiMongoSubDir":"",
+
+    "activaFirma":false,
+    "apiFirma":"",
+    "apiFirmaPuerto":9582,
+    "apiFirmaPuertoSsl":"",
+    "apiFirmaSubDir":"",
+
+    "tipoWhatsapp":"",
+    "formatoDefIntra":"defaultBraced",
+    "permiteSoloAdjuntos":false,
+    "activaProtect":true,
+    "activaNotaPaciente":true,
+
+    "activaFirmaList":false,
+    "activaImagenesAnalisis":false,
+    "messageWebAnalisis":"Resultado privado, por favor acercarse a retirar a Laboratorio",
+    "messageWebAnalisisStsWeb":"[En proceso...]",
+    "parametrosPDF":[],
+    "parametrosPDFOrden":[], 
+    "activaMail":true,
+    "activaWhatsApp":true,
+    
+    "tiempoInactividad":1800000,
+    "rootPath":"login-intranet",
+    "tipoUserDef":"Medico",
+    "ActivaTiposUsuarios":{
+        "Orden":false,
+        "Paciente":true,
+        "Medico":true,
+        "Empresa":true,
+        "Intranet":true,
+        "Externo":true
+    },
+    "label_externo":"Externo",
+
+    "ActiveByHost":{
+        "Medico":[],
+        "Empresa":[],
+        "Intranet":[],    
+        "Externo": [ "127.0.0.1","172.20.33.239"]
+    },
+    "DefaultUpperCase":{
+        "Paciente":true,
+        "Medico":true,
+        "Empresa":true,
+        "Intranet":true
+    },
+    "ActiveByPrivateIp":"http://192.168.57.55:9180/",
+    "activaLiberacion":false,
+    "progressPDF":false,
+    "formatoRefPDF":"ochoa",
+    "fechaInicioChart":"2020-01-01",
+
+    "pdfEncabezado":"",
+    "pdfPie":"",
+    "formatoFechaDisplay":"yyyy-MM-dd HH:mm",
+    "estilo":2,
+    "enableLog":false,
+    "defaultLenguaje":"es",
+    "nombreLab":"Des-Lab",
+    "paginacion": 10,
+    "detalleOrden":{
+        "colorEtiqueta":null,
+        "colorTitulo":null,
+        "colorSubTitulo":null,
+        "colorExamenOdd":null,
+        "colorExamenEven":null
+
+    },
+
+    "redirectWeb":"",
+    "enablePedidos":true,
+    "onlyPedidos":false,
+    "defaultInicioMed":"ingreso-pedido",
+
+    "active_turno":true,
+    "max_pedidos_turno":1,
+
+
+    "active_lugar_pedido":true,
+    "lugar_default":true,
+    "listado_lugar_pedido":[
+        {"descripcion":"EMERGENCIA","codigo":2,"enable":true,"style":"emergencia"},
+        {"descripcion":"HOSPITALIZACION","codigo":1,"enable":true,"style":"hospitalizacion"},
+        {"descripcion":"CONSULTA EXTERNA","codigo":3,"enable":true,"style":"consulta"}
+    
+      ],
+    
+    "unidad_pedido":{
+        "enable":true,
+        "required":false
+    },
+    "diagnostico_pedido":{
+        "enable":true,
+        "required":false
+    },
+    "diagnostico_extra_pedido":{
+        "enable":true,
+        "required":false
+    },
+
+    "pac_fec_nac":{
+        "enable":true,
+        "required":true
+    },
+
+    "pac_sex":{
+        "enable":true,
+        "required":true
+    },
+
+    "observaciones_pedido":{
+        "enable":true,
+        "required":true,
+        "default_msg":"Sin observaciones"
+    },
+
+    "refentrega_pedido":{
+        "enable":false,
+        "required":false
+    },
+
+    "enable_entrega_orden":true,
+    "enable_pedido_referencia":false,
+    "enable_orden_referencia":true,
+    "cod_med_default":0,
+    "enableOrden":true,
+    "enabe_hora_turno":false,
+    "check_ped_ord":false,
+    "printer_name":"ssda",
+    "intra_envio_bloque":true,
+    "enable_orden_completa":false,
+    "enable_envio_iess":true,
+    "enable_presupuesto":true,
+    "enable_configuracion":true,
+    "enable_descarga_facturas":false,
+    "enable_envio_issfa":true,
+    "id_plan_default_pedido":1,
+    "ref_tur_externo":3,
+    "ref_tur_emergencia":2,
+    "ref_tur_hospitalizacion":1,
+
+    "dbloque_name":["index","nro_ord","name"],
+
+    "catalogo_external":{
+        "enable":true,
+        "url":"http://fserver.netlab.com.ec/Examenes/",
+        "users":["ref"]
+    },
+
+    
+
+    "guiaTracking":{
+        "enable":true,
+        "users":["ref"]
+    },
+
+    "typePrices":{
+        "prices":"seg",
+        "user":["ref"]
+    }
+  
+}
