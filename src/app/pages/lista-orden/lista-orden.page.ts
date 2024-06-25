@@ -629,6 +629,16 @@ export class ListaOrdenPage implements OnInit {
     this.funcionesComunesIntra.enviarMailIntra(this.tipo_user + "-" + this.var_usr, idOrden, 0, "")
   }
 
+  async cargarDatosPaciente2(orden){
+
+    this.funcionesComunesIntra.cargaTodosParametrosOrden(orden).then(result => {
+
+    console.log('Resultado - metodo adquirido de Pdf: ',result);
+
+    });
+    // cargaTodosParametrosOrden
+  }
+
   async cargarDatosPaciente(orden, formato = "") {
     console.log("ORDEN - cargar Paciente", orden);
     if (this.tipo_user == 'int') {
@@ -659,6 +669,7 @@ export class ListaOrdenPage implements OnInit {
     })
   }
 
+  
   cargaPDF(idOrden, formato = "") {
     this.presentLoading()
     this.funcionesComunesIntra.renderizaPDFOrden(idOrden, 0, formato).then(pdf => {
