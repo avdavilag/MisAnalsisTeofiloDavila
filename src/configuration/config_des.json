@@ -101,7 +101,7 @@
     "onlyPedidos":false,
     "defaultInicioMed":"ingreso-pedido",
 
-    "active_turno":true,
+    "active_turno":false,
     "max_pedidos_turno":1,
 
 
