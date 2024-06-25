@@ -43,6 +43,7 @@ export class ListaPedidosPage implements OnInit {
   public tooltip_btn = "";
   public tipo_server = 0;
   public flag_filtro_intra_med: any = false;
+  public flag_boton_editar:any=true;
   colores_grid = [];
   public fecha_comparar = new Date();
   public flag_pintar_item = false;
@@ -92,7 +93,6 @@ export class ListaPedidosPage implements OnInit {
   }
 
   ngOnInit() {
-
     if (window.screen.width <= 768 || window.innerWidth <= 768) { // 768px portrait        
       this.tablet = true;
     } else {
@@ -111,7 +111,7 @@ export class ListaPedidosPage implements OnInit {
         this.mobile = false;
       }
     };
-    this.getData('intra', false);
+    this.getData('intra', true);
     this.colores_grid = ["#D6FFFA", "#FFFFEF", "#EAD6FF"]
 
 
@@ -133,6 +133,7 @@ export class ListaPedidosPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.flag_boton_editar=false;
     this.lista_pedidos = [];
     this.lista_filtrar = [];
     this.lista_temporal = [];
@@ -154,8 +155,8 @@ export class ListaPedidosPage implements OnInit {
     //  console.log("usuario", this.usuario);
 
     setTimeout(() => {
-
-      this.getData('intra', this.flag_filtro_intra_med);
+      this.flag_boton_editar=false;
+      this.getData('intra', true);
     }, 100);
 
   }
@@ -173,7 +174,13 @@ export class ListaPedidosPage implements OnInit {
     this.lista_temporal = [];
     this.infoText = "Cargando...";
 
+    
     this.flag_filtro_intra_med = flag_filtro_intra_med;
+    if(this.flag_filtro_intra_med===false){
+      this.flag_boton_editar=true;
+    }else{
+      this.flag_boton_editar=false;
+    }
     console.error('Flag this.flag_filtro_intra_med 11: ', this.flag_filtro_intra_med);
 
     //console.error('Tipo de tipos: ',this.varGlobal.getVarUsuarioTipo());
@@ -236,7 +243,8 @@ export class ListaPedidosPage implements OnInit {
       console.log("Antes de Antes intra medico", this.flag_filtro_intra_med);
       if (this.flag_filtro_intra_med === undefined && this.flag_filtro_intra_med == null) {
         console.log("Entro antes del filtro entrro` por primera vez");
-        this.flag_filtro_intra_med = false;
+        this.flag_filtro_intra_med = false; 
+        this.flag_boton_editar=false;
       }
 
       if (this.flag_filtro_intra_med) {
@@ -252,6 +260,8 @@ export class ListaPedidosPage implements OnInit {
 
 
   validaFecha() {
+
+    console.log('this.flag_filtro_intra_med - valiar Fecha: ',this.flag_filtro_intra_med)
     let fecha_hoy = new Date()
     let dias = 7
     let espera = 100
@@ -269,8 +279,12 @@ export class ListaPedidosPage implements OnInit {
       }, 100);
     }
     setTimeout(() => {
-
-      this.getData()
+      if(this.flag_filtro_intra_med){
+        this.getData('intra', this.flag_filtro_intra_med);
+      }else{
+        this.getData('med', this.flag_filtro_intra_med);
+      }
+      
     }, espera);
 
   }

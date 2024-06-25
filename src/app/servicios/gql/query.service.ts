@@ -554,19 +554,21 @@ query test($jsonText:String!){
 
   //////////////////////////////
   //////////////////////////////
-  insertPedAnaxTur(json_datos, json_ana, inputObservacion, fecha_examen) {
+  insertPedAnaxTur(json_datos, json_ana, inputObservacion, fecha_examen,nro_habitacion) {
     let gqldata = gql`
 mutation insertPedAnaxTur(
     $json_datos:String!,
     $json_ana:String!,
     $inputObservacion:String!,
-    $fecha_examen:String!
+    $fecha_examen:String!,
+    $nro_habitacion:String!
    ) {
     insertPedAnaxTur(
       json_datos:$json_datos,
       json_ana:$json_ana,
       inputObservacion:$inputObservacion,
-      fecha_examen:$fecha_examen                                                   
+      fecha_examen:$fecha_examen,
+      nro_habitacion:$nro_habitacion                                                   
  ) {
     mensaje
     resultado
@@ -580,7 +582,8 @@ mutation insertPedAnaxTur(
           json_datos: json_datos,
           json_ana: json_ana,
           inputObservacion: inputObservacion,
-          fecha_examen: fecha_examen
+          fecha_examen: fecha_examen,
+          nro_habitacion:nro_habitacion
         }
       }).toPromise();
 

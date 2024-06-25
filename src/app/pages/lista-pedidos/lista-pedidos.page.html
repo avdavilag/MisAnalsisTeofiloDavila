@@ -93,7 +93,14 @@
 
 
     </ion-card-header>
-
+<ion-row>
+  <ion-col size="12" >
+    <ion-card-header class="ion-text-center">
+      <ion-badge *ngIf="!flag_boton_editar" color="tertiary" style=" font-size: x-large;">TODOS LOS PEDIDOS</ion-badge>
+      <ion-badge *ngIf="flag_boton_editar" color="secondary" style=" font-size: x-large;">MIS PEDIDOS</ion-badge>
+    </ion-card-header>
+  </ion-col>
+</ion-row>
 
 
   
@@ -118,8 +125,8 @@
      -->
           <ion-text  class="{{orden.anular_pedido==0?'':'item_anulado'}}"  >
 
-            <ion-row class="ion-text-left nombres_orden">
-              <ion-col [size]="mobile ? '12' : ''">
+            <ion-row class="ion-text-center nombres_orden">
+                      <ion-col [size]="mobile ? '12' : ''">
                 {{orden.Paciente.nombre_completo}}
               </ion-col>
               <ion-col [ngClass]="{'ion-text-center': mobile}"  [size]="mobile ? '12' : ''" >
@@ -128,7 +135,7 @@
                   {{orden.estado}}
                 </ion-badge>
                 -->
-                <ion-chip *ngIf="orden.anular_pedido==0" (click)="go_ingresar_duplicado(orden)" color="secondary" size="small">
+                <ion-chip *ngIf="orden.anular_pedido==0 && flag_boton_editar;" (click)="go_ingresar_duplicado(orden)" color="secondary" size="small">
                   <ion-label>Editar Pedido</ion-label>
                 </ion-chip>
                 &nbsp;
@@ -226,7 +233,11 @@
               <ion-col class="f_ingreso" [ngClass]="{'ion-text-center': mobile, 'ion-text-end': !mobile}" style="font-size: 10px;" [size]="mobile ? '12' : '3'">                
                 Fecha de Ingreso de Pedido: {{orden.fec_ord| date:'MMM d, y, h:mm a'}}                
             </ion-col>
+            <ion-col class="ion-text-center" *ngIf="!flag_boton_editar" [size]="12">
+              <ion-badge class="custom-badge">No se puede editar, solo Ver.</ion-badge>
+                            </ion-col>
             </ion-row>
+
           </ion-text>
           
           

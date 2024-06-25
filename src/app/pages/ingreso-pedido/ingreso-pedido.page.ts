@@ -1572,10 +1572,13 @@ formatDateConsultaDatos(dateObject: Date): string {
      this.ListAnalisis_tempo_update_pedido.push(element);
      console.log("id_turno presentAlertUpdate: ", id_turno);
    }
+   
  }
-
+ if(this.inputHabitacion === null && this.inputHabitacion === '' && this.inputHabitacion === undefined){
+  this.inputHabitacion='';
+  }
  array_turno_array.push({ id_pedidos: this.pedido_duplicar.id_pedidos, id_turno: id_turno, num_ana: this.ListAnalisis_tempo_update_pedido.length });
- this.presentAddAnalisisPedido(JSON.stringify(array_turno_array), JSON.stringify(this.ListAnalisis_tempo_update_pedido), this.ListAnalisis_tempo_update_pedido,this.inputObservacion,this.inputFechaExamen);
+ this.presentAddAnalisisPedido(JSON.stringify(array_turno_array), JSON.stringify(this.ListAnalisis_tempo_update_pedido), this.ListAnalisis_tempo_update_pedido,this.inputObservacion,this.inputFechaExamen,this.inputHabitacion);
     } else {
         this.presentAlertChangeDate(this.inputFechaExamen);
     }
@@ -1608,8 +1611,9 @@ for (const element of this.ListaAnalisis) {
   }
 }
 
+console.log('inputHabitacion: ',this.inputHabitacion)
 array_turno_array.push({ id_pedidos: this.pedido_duplicar.id_pedidos, id_turno: id_turno, num_ana: this.ListAnalisis_tempo_update_pedido.length });
-this.presentAddAnalisisPedido(JSON.stringify(array_turno_array), JSON.stringify(this.ListAnalisis_tempo_update_pedido), this.ListAnalisis_tempo_update_pedido, this.inputObservacion, fecha_modificar);
+this.presentAddAnalisisPedido(JSON.stringify(array_turno_array), JSON.stringify(this.ListAnalisis_tempo_update_pedido), this.ListAnalisis_tempo_update_pedido, this.inputObservacion, fecha_modificar,this.inputHabitacion);
         }
         }, {
           text: "No",
@@ -1621,7 +1625,7 @@ this.presentAddAnalisisPedido(JSON.stringify(array_turno_array), JSON.stringify(
     await alert.present();
   }
 
-  async presentAddAnalisisPedido(json_datos, json_ana, lista,inputObservacion?,fecha_examen?) {
+  async presentAddAnalisisPedido(json_datos, json_ana, lista,inputObservacion?,fecha_examen?,nro_habitacion?) {
 
     const alert = await this.alertController.create({
       header: '! Esta Seguro !',
@@ -1631,7 +1635,7 @@ this.presentAddAnalisisPedido(JSON.stringify(array_turno_array), JSON.stringify(
         {
           text: "Si",
           handler: () => {
-            this.queryservice.insertPedAnaxTur(json_datos, json_ana,inputObservacion,fecha_examen).then((result: any) => {
+            this.queryservice.insertPedAnaxTur(json_datos, json_ana,inputObservacion,fecha_examen,nro_habitacion).then((result: any) => {
               console.log("result insertPedAnaxTur en verificacion: ", result);
               if(result.data.insertPedAnaxTur.data === "0"){
                 this.toastservice.presentToast({ message: result.data.insertPedAnaxTur.mensaje, position: "buttom", color: "success" })
